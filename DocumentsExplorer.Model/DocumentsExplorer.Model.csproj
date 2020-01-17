@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B26CB160-596B-4B3E-98F1-35E543AEF866}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DocumentsExplorer.Model</RootNamespace>
+    <AssemblyName>DocumentsExplorer.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AAAID.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dbbac5f5a6a7d824, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Framework\AAAID.Common\bin\Debug\AAAID.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Urf.Repository.Pattern, Version=1.0.0.0, Culture=neutral, PublicKeyToken=50b66b2065091f1d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Urf.Repository.Pattern\v4.0_1.0.0.0__50b66b2065091f1d\Urf.Repository.Pattern.dll</HintPath>
+    </Reference>
+    <Reference Include="Urf.Repository.Pattern.Ef6, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0896e1f4bd1a3d09, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Windows\Microsoft.NET\assembly\GAC_MSIL\Urf.Repository.Pattern.Ef6\v4.0_1.0.0.0__0896e1f4bd1a3d09\Urf.Repository.Pattern.Ef6.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Migrations\201909160932021_first.cs" />
+    <Compile Include="Migrations\201909160932021_first.Designer.cs">
+      <DependentUpon>201909160932021_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909160940401_second.cs" />
+    <Compile Include="Migrations\201909160940401_second.Designer.cs">
+      <DependentUpon>201909160940401_second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909170802490_3th.cs" />
+    <Compile Include="Migrations\201909170802490_3th.Designer.cs">
+      <DependentUpon>201909170802490_3th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909240452365_4th.cs" />
+    <Compile Include="Migrations\201909240452365_4th.Designer.cs">
+      <DependentUpon>201909240452365_4th.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AgendaAttachment.cs" />
+    <Compile Include="Models\AgendaDetail.cs" />
+    <Compile Include="Models\AgendaItem.cs" />
+    <Compile Include="Models\Attachment.cs" />
+    <Compile Include="Models\Company.cs" />
+    <Compile Include="DocumentExplorerMigrationConfiguration.cs" />
+    <Compile Include="Models\ActivitySector.cs" />
+    <Compile Include="Models\CouncilTypePermission.cs" />
+    <Compile Include="Models\MeetingAttachment.cs" />
+    <Compile Include="Models\Contributor.cs" />
+    <Compile Include="Models\CouncilMember.cs" />
+    <Compile Include="Models\CouncilType.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\Currency.cs" />
+    <Compile Include="Models\Decision.cs" />
+    <Compile Include="Models\DecisionExecution.cs" />
+    <Compile Include="Models\DecisionType.cs" />
+    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DepartmentCoordinator.cs" />
+    <Compile Include="Models\DepartmentResponsible.cs" />
+    <Compile Include="Models\DocumentsExplorerContext.cs" />
+    <Compile Include="Models\MainCategory.cs" />
+    <Compile Include="Models\MeetingAttendance.cs" />
+    <Compile Include="Models\Meeting.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\ReferenceItem.cs" />
+    <Compile Include="Models\ReferenceType.cs" />
+    <Compile Include="Models\Round.cs" />
+    <Compile Include="Models\SubCategory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\meeting-type-list\meeting-type-list.component.css" />
+    <Content Include="bin\meeting-type-list\meeting-type-list.component.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201909160932021_first.resx">
+      <DependentUpon>201909160932021_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909160940401_second.resx">
+      <DependentUpon>201909160940401_second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909170802490_3th.resx">
+      <DependentUpon>201909170802490_3th.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909240452365_4th.resx">
+      <DependentUpon>201909240452365_4th.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="bin\meeting-type-list\meeting-type-list.component.spec.ts" />
+    <TypeScriptCompile Include="bin\meeting-type-list\meeting-type-list.component.ts" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

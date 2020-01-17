@@ -1,0 +1,78 @@
+
+
+<div [formGroup]="_parentForm">
+  <div formArrayName="MeetingAttendances">
+    <ng-container *ngIf="displayMsg">
+      <div class="d-flex borders mt-1">
+        <img src="assets/images/information.png" class="img-30" />
+        <h6 class="info ml-1">{{'messages.AddOutsideEmployee' | translate}}</h6>
+      </div>
+
+    </ng-container>
+    <div *ngFor="let data of parentForm['controls'].MeetingAttendances['controls']; let i=index">
+
+      <div [formGroupName]="i">
+        <div class="row pb-2">
+          <div class="col-md-3">
+            <dx-text-box placeholder="" class="width-95" [(value)]="data.get('Id').value" [class.d-none]="true"
+                         formControlName="Id" [rtlEnabled]="rtlEnabled">
+            </dx-text-box>
+            <div class="dx-field">
+              <div class="dx-field-label">{{ 'meetings.outsideMemberName' | translate }}</div>
+              <div class="dx-field-value">
+                <dx-text-box placeholder="{{ 'meetings.outsideMemberNameCtrl' | translate }}" formControlName="Name">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'meetings.outsideMemberName' | translate} }}">
+                    </dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="dx-field-label">{{ 'meetings.outsideMemberEmail' | translate }}</div>
+            <div class="dx-field-value">
+              <dx-text-box placeholder="ex@aaaid.ae" formControlName="Email">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'meetings.outsideMemberEmail' | translate} }}"></dxi-validation-rule>
+                  <dxi-validation-rule type="email" message="{{ 'messages.txtEmailNotVaild' | translate }}"></dxi-validation-rule>
+                </dx-validator>
+              </dx-text-box>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="dx-field-label">{{ 'meetings.outsideMemberJobDescription' | translate }}</div>
+            <div class="dx-field-value">
+              <dx-text-box placeholder="{{ 'meetings.outsideMemberJobDescription' | translate }}" formControlName="JobDescription">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'meetings.outsideMemberJobDescription' | translate} }}">
+                  </dxi-validation-rule>
+                </dx-validator>
+              </dx-text-box>
+            </div>
+          </div>
+
+          <div class="col-md-3 d-flex align-items-center">
+            <div class="width-full">
+              <div class="dx-field-label">{{ 'meetings.outsideMemberCompany' | translate }}</div>
+              <div class="dx-field-value d-flex align-items-center">
+                <dx-text-box placeholder="{{ 'meetings.outsideMemberCompanyCtrl' | translate }}" formControlName="CompanyName">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'meetings.outsideMemberCompany' | translate} }}">
+                    </dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+              </div>
+            </div>
+            <div class="text-right delete-link "><a class="delete-link font-30" (click)="onDeletingOutput(i)"><span class="font-icon icon-delete"></span></a></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="d-flex">
+
+      <button class="btn btn-secondary mt-2" type="button" (click)="addNewoutEmployee()">{{'meetings.AddOutsideEmp' | translate}}</button>
+    </div>
+  </div>
+</div>

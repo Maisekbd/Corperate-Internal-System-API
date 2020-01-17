@@ -1,0 +1,278 @@
+﻿@using DocumentsExplorer.DTO;
+@using DocumentsExplorer.Model.Models;
+@using DocumentsExplorerResources = DocumentsExplorer.Website.Resources.DocumentsExplorerResource;
+@using SharedResources = DocumentsExplorer.Website.Resources.SharedResource;
+@model MinutesOfMeetingDTO
+<div class="box box-success">
+    <div class="box-header with-border">
+        @if (Model.Id == 0)
+        {
+            <h3 class="box-title"><i class="fa fa-book"></i> @DocumentsExplorerResources.txtNewMinutesOfMeetingTitle</h3>
+        }
+        else
+        {
+            <h3 class="box-title"><i class="fa fa-book"></i> @DocumentsExplorerResources.txtEditMinutesOfMeetingTitle</h3>
+
+        }
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    @using (Html.BeginForm("Create", "MinutesOfMeeting", FormMethod.Post,
+                                      new { enctype = "multipart/form-data", @id = "MinutesOfMeetingCreateFormId" }))
+    {
+    <div class="box-body">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(c => c.Id)
+        @Html.HiddenFor(c => c.CreateDate)
+        @Html.HiddenFor(c => c.CreatedBy)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div><label class="control-label"><i class="fa fa-users"></i> @DocumentsExplorerResources.txtCouncilTypeDescription</label></div>
+                        <div class="k-rtl">
+                            @(Html.Kendo().DropDownListFor(c => c.CouncilTypeId)
+                                                                                        .Name("CouncilTypeId")
+                                                                                        .DataTextField("Description")
+                                                                                        .DataValueField("Id")
+                                                                                        .OptionLabel(DocumentsExplorerResources.txtCouncilTypeSelectValue)
+                                                                                        .DataSource(source =>
+                                                                                        {
+                                                                                            source.Read(read => { read.Action("ReadCouncilTypes", "MinutesOfMeeting"); });
+                                                                                        })
+                                                                                        .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                            )
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div><label class="control-label"><i class="fa fa-users"></i> @DocumentsExplorerResources.txtRoundDescription</label></div>
+                        <div class="k-rtl">
+                            @(Html.Kendo().DropDownListFor(c => c.RoundId)
+                                                                                        .Name("RoundId")
+                                                                                        .DataTextField("RoundNumber")
+                                                                                        .DataValueField("Id")
+                                                                                        .OptionLabel(DocumentsExplorerResources.txtRoundSelectValue)
+                                                                                        .DataSource(source =>
+                                                                                        {
+                                                                                            source.Read(read => { read.Action("ReadRounds", "MinutesOfMeeting"); });
+                                                                                        })
+                                                                                        .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                            )
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div><label class="control-label"><i class="fa fa-map-marker"></i> @DocumentsExplorerResources.txtLocation</label> </div>
+                        <div>
+                            @Html.TextBoxFor(c => c.Location, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div><label class="control-label"><i class="fa fa-calendar"></i> @DocumentsExplorerResources.txtMeetingDate</label> </div>
+                        <div class="k-rtl">
+                            @(Html.Kendo().DatePickerFor(c => c.MeetingDate)
+                                                               .Name("MeetingDate")
+                                                               .Format("dd/MM/yyyy")
+                                                                .Culture("ar-AE")
+                                                               .Value(DateTime.Now)
+                                                               .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                                                               .DateInput()
+                            )
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <div><label class="control-label"><i class="fa fa-edit"></i> @DocumentsExplorerResources.txtMeetingSummary</label> </div>
+                        <div class="k-rtl">
+                            @*@Html.TextAreaFor(c => c.MeetingSummary, new { cols = "25", rows = "3", @class = "form-control" })*@
+                            @(Html.Kendo().EditorFor(c => c.MeetingSummary)
+                                                                .Name("MeetingSummary")
+                                                                .HtmlAttributes(new { style = "width: 100%;height:440px" })
+                                                                .Tools(tools => tools
+                                                                .Clear()
+                                                                .Bold().Italic().Underline().Strikethrough()
+                                                                .JustifyLeft().JustifyCenter().JustifyRight().JustifyFull()
+                                                                .InsertUnorderedList().InsertOrderedList()
+                                                                .Outdent().Indent()
+                                                                .CreateLink().Unlink()
+                                                                .TableEditing()
+                                                                .ViewHtml()
+                                                                .Formatting()
+                                                                .CleanFormatting()
+                                                                .FontName()
+                                                                .FontSize()
+                                                                .FontColor().BackColor()
+                                                                .Print()
+                                                                ))
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class=""><label class="control-label"><i class="fa fa-calendar-check-o" style="color:green;"></i> @DocumentsExplorerResources.txtAttendances</label> </div>
+                        <div class="k-rtl">
+                            @(Html.Kendo().MultiSelectFor(c => c.SelectedAttendances)
+                                               .Name("SelectedAttendances")
+                                               .DataTextField("Name")
+                                               .DataValueField("Id")
+                                               .Value(Model.Attendances)
+                                                .DataSource(source =>
+                                            {
+                                                source.Read(read =>
+                                                                                {
+                                                                                    read.Action("ReadCouncilMembers", "MinutesOfMeeting");
+                                                                                })
+                                                                                .ServerFiltering(true);
+                                            })
+                                           .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                            )
+                        </div>
+                    </div>
+                </div>
+                @*</div>
+                </div>
+                        <div class="row">
+                            <div class="col-md-12">*@
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class=""><label class="control-label"><i class="fa fa-calendar-times-o" style="color:red;"></i> @DocumentsExplorerResources.txtAbsents</label> </div>
+                        <div class="k-rtl">
+                            @(Html.Kendo().MultiSelectFor(c => c.SelectedAbsents)
+                                         .Name("SelectedAbsents")
+                                         .DataTextField("Name")
+                                         .DataValueField("Id")
+                                         .Value(Model.Absents)
+                                          .DataSource(source =>
+                                          {
+                                              source.Read(read =>
+                                                                              {
+                                                                                  read.Action("ReadCouncilMembers", "MinutesOfMeeting");
+                                                                              })
+                                                                              .ServerFiltering(true);
+                                          })
+                                         .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                            )
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <div><label class="lbl-in-row"><i class="fa fa-file-o"></i> @DocumentsExplorerResources.txtAttachments</label> </div>
+                        <div class="k-rtl">
+                            @(Html.Kendo().Upload()
+                                       .Name("files")
+                                       .Multiple(false)
+                                       .HtmlAttributes(new { aria_label = "files", @class = "form-control" })
+                            )
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (Model.Id != 0)
+        {
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-lg-8">
+                        <div class="k-rtl">
+                            @(Html.Kendo().Grid<Attachment>()
+                                                                                                                                               .Name("AttachmentGrid")
+                                                                                                                                               .Columns(columns =>
+                                                                                                                                               {
+                                                                                                                                                   columns.Bound(c => c.Id).Visible(false);
+                                                                                                                                                   columns.Bound(c => c.Name).Title(DocumentsExplorerResources.txtAttachmentName);
+                                                                                                                                                   columns.Bound(c => c.FileExtension).Title(DocumentsExplorerResources.txtAttachmentType).ClientTemplate("#if(FileExtension=='.pdf') { # <i class='fa fa-file-pdf-o'></i> #} else if(FileExtension=='.mp3') {# <i class='fa fa-file-audio-o'></i> #}#");
+                                                                                                                                                   columns.Template(@<text></text>).Width("6%")
+.Title(SharedResources.txtDownload)
+.ClientTemplate("<a href='" +
+Url.Action("Download", "MinutesOfMeeting", new { fileName = "#=Name#", minutesOfMeetingId = "#= MinutesOfMeetingId#", fileExtension = "#= FileExtension#" }) +
+"'><i class='fa fa-download'></i></a> ");
+                                                                                                                columns.Template(@<text></text>).Width("8%")
+                                                        .Title(SharedResources.txtPreview)
+                                                        .ClientTemplate("<a target = '_blank' href='" +
+                                                        Url.Action("Preview", "MinutesOfMeeting", new { fileName = "#=Name#", minutesOfMeetingId = "#= MinutesOfMeetingId#", fileExtension = "#= FileExtension#" }) +
+                                                        "'><i class='fa fa-search'></i></a> ");
+                                                                                columns.Command(c => c.Custom("Remove").Template("<i style=' cursor: pointer; color:red;' class='fa fa-times' onclick='onDeleteRow($(this))'></i>").Click("onDeleteRow"));
+                                                                            })
+.HtmlAttributes(new { style = "height: 200px;" })
+.Scrollable()
+.Sortable()
+.Pageable(pageable => pageable
+.Refresh(true)
+.PageSizes(true)
+.ButtonCount(5))
+.DataSource(dataSource => dataSource
+.Ajax()
+.Model(c => c.Id(d => d.Id))
+.Read(read => read.Action("ReadAttachments", "MinutesOfMeeting").Data("additionalInfo"))
+.Destroy(delete => delete.Action("DeleteAttachment", "MinutesOfMeeting"))
+.PageSize(20)
+)
+                            )
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+                            <!-- /.box-body -->
+
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-success btn-padding pull-right"><i class="fa fa-save" style="padding-left:4px;"></i>@SharedResources.btnSave</button>
+                                <button type="submit" class="btn btn-default btn-padding">@SharedResources.btnCancel</button>
+
+                            </div>
+                            }
+                            <!-- /.box-footer -->
+                        </div>
+    @Html.Partial("Modal/DeleteConfirmationModal")
+    <script type="text/javascript">
+
+    function additionalInfo() {
+        return {
+            minutesOfMeetingId: '@Model.Id'
+        }
+    }
+
+        function onDeleteRow(e) {
+            var grid = $('#AttachmentGrid').data("kendoGrid");
+            var row = $(e).closest("tr")[0];
+            $('#modal-Confirmation-Delete').modal('show');
+
+            $("#ConfirmDelete").click(function () {
+                var data = grid.dataItem(row);
+                grid.dataSource.remove(data);
+                grid.dataSource.sync();
+                $('#modal-Confirmation-Delete').modal('hide');
+            });
+        }
+    </script>

@@ -1,0 +1,7 @@
+<div >
+  {{message}}
+</div>
+<div mat-dialog-actions class="dx-box-flex justify-content-center mt-2">
+  <button type="button" class="btn btn-secondary mr-1 ml-1" (click)="onNoClick()">{{'buttons.no'|translate}}</button>
+  <button type="button" class="btn btn-primary mr-1 ml-1" [mat-dialog-close]="true" cdkFocusInitial>{{'buttons.yes'|translate}}</button>
+</div>

@@ -1,0 +1,98 @@
+﻿@using DocumentsExplorer.DTO;
+@using DocumentsExplorerResources = DocumentsExplorer.Website.Resources.DocumentsExplorerResource;
+@using SharedResources = DocumentsExplorer.Website.Resources.SharedResource;
+@model RoundDTO
+<div class="box box-success">
+    <div class="box-header with-border">
+        @if (Model.Id == 0)
+        {
+            <h3 class="box-title">@DocumentsExplorerResources.txtNewRoundTitle</h3>
+        }
+        else
+        {
+            <h3 class="box-title">@DocumentsExplorerResources.txtEditRoundTitle</h3>
+
+        }
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    @using (Html.BeginForm("Create", "Round", FormMethod.Post,
+                                      new { enctype = "multipart/form-data", @id = "RoundCreateFormId" }))
+    {
+        <div class="box-body">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(c => c.Id)
+            @Html.HiddenFor(c => c.CreateDate)
+            @Html.HiddenFor(c => c.CreatedBy)
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2"><label class="lbl-in-row"> @DocumentsExplorerResources.txtRoundNumber</label> </div>
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(c => c.RoundNumber, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2"><label class="lbl-in-row"> @DocumentsExplorerResources.txtFromDate</label> </div>
+                    <div class="col-md-2 k-rtl">
+                        @(Html.Kendo().DatePickerFor(c => c.FromDate)
+                                                                             .Name("FromDate")
+                                                                             .Format("dd/MM/yyyy")
+                                                                              //.Value(new DateTime(DateTime.Now.Year, 01, 01))
+                                                                              .Culture("ar-AE")
+                                                                             //.Value(DateTime.Now)
+                                                                             .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                                                                             .DateInput()
+                        )
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2"><label class="lbl-in-row"> @DocumentsExplorerResources.txtToDate</label> </div>
+                    <div class="col-md-2 k-rtl">
+                        @(Html.Kendo().DatePickerFor(c => c.ToDate)
+                                                                                     .Name("ToDate")
+                                                                                     .Format("dd/MM/yyyy")
+                                                                                      .Value(new DateTime(DateTime.Now.Year, 12, 31))
+                                                                                     .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                                                                                     .DateInput()
+                        )
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-success btn-padding pull-right"><i class="fa fa-save" style="padding-left:4px;"></i>@SharedResources.btnSave</button>
+            <button type="submit" class="btn btn-default btn-padding">@SharedResources.btnCancel</button>
+
+        </div>
+    }
+    <!-- /.box-footer -->
+</div>
+
+<script type="text/javascript">
+
+    
+    function filterMainCategories() {
+        return {
+            councilTypeId: $("#CouncilTypes").val()
+        };
+    }
+
+
+    function filterSubCategories() {
+        return {
+            mainCategoryId: $("#MainCategories").val()
+        };
+    }
+
+
+</script>

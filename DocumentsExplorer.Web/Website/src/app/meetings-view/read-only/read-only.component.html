@@ -1,0 +1,222 @@
+<h3 class="page-title mb-3 d-flex align-items-end">
+  <span class="font-icon icon-meeting"></span>
+  <span class="text mr-3">{{'meetings.title' | translate}}</span>
+</h3>
+<ng-container *ngIf="show">
+  <div class="container-fluid mb-4 mt-3">
+    <div class="shadow-container pb-3">
+      <div class="row pt-4">
+        <div class="col-md-12">
+          <h4 class="sub-section">
+            <span class="font-icon icon-about"></span>{{'meetings.meetingInfo' | translate}}
+            <span class="font-weight-bold reference-number font-7">
+              [{{'meetings.meetingNo' | translate }}:
+              <span>{{ meeting.MeetingIndexNumber }}</span>
+              ]
+            </span>
+          </h4>
+        </div>
+      </div>
+      <div class="row pt-4 ">
+        <div class="col-md-6">
+          <span class="font-weight-bold">{{'meetings.meetingTitle' | translate}}</span>&nbsp;&nbsp;
+          <span>{{ meeting.CouncilType.Description }}</span>
+          <span> {{ meeting.MeetingNumber}}</span>
+          <span> لعام {{ meeting.MeetingDate | date: 'yyyy'}}</span>
+        </div>
+        <div class="col-md-3">
+          <span class="font-weight-bold">{{'meetings.location' | translate}}</span>&nbsp;&nbsp;
+          <span>{{ meeting.Location }}</span>
+        </div>
+        <div class="col-md-3">
+          <span class="font-weight-bold">{{'meetings.date' | translate}}</span>&nbsp;&nbsp;
+          <span>{{ meeting.MeetingDate | date: 'dd/MM/yyyy'}}</span>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  <!--Agenda-->
+  <div class="skew-top-gray z-1"></div>
+  <div class="light-gray-bg row p-3">
+    <!--<div class="d-flex title-gray-area">
+      <span class="font-icon icon-agenda-title"></span>
+      <h4 class="ml-5 mt-4 mb-2">
+        {{'decisions.agendaItem' | translate}}
+        <p><span class="font-7 reference-number">{{'decisions.agendaItemDesc' | translate}}</span></p>
+      </h4>
+
+    </div>-->
+
+
+    <div class="container-fluid">
+
+      <div class="title-gray-area position-relative">
+        <span class="font-icon icon-agenda-title"></span>
+        <h4>
+          {{'decisions.agendaItem' | translate}}
+        </h4>
+
+      </div>
+      <div class="pb-3 z-10 position-relative ">
+        <ul class="bullet">
+          <li *ngFor="let agendaItem of meeting.AgendaItems; let i =index">
+            <div class="row mb-2">
+              <div class="col-lg-10 col-md-9">
+                <div class="d-flex align-items-center">
+                  <div class="number-dotted dark-gray-bg border-0">{{agendaItem.AgendaNumber}}</div>
+                  {{agendaItem.AgendaText}}
+                </div>
+                <ng-container *ngIf="agendaItem.AttachementName !=='' ">
+                  <div class="d-block uploader-preview mt-2 ml-1" [ngClass]="{'d-none': agendaItem.AttachementName != ''}">
+                    <a class="color-green " title="{{ 'gridAction.View' | translate }}" (click)="viewAgendaAttachmentClick(agendaItem.AttachementName)">
+                      <span class="font-icon pop icon-preview float-left"></span><span>{{'buttons.previewFile' | translate}}</span>
+                    </a>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="col-lg-2 col-md-3 text-right">
+                <ng-container *ngIf="AuthService.IsAuthorized(DecisionEditableMode)">
+                  <button class="btn btn-outline-primary" type="button" (click)="onSelectAgendaItem(0,agendaItem.Id)">{{'buttons.select' | translate}}</button>
+                </ng-container>
+              </div>
+            </div>
+            <ng-container *ngIf="agendaItem.AgendaDetails.length !=0">
+              <ul>
+                <li *ngFor="let agendaDetail of agendaItem.AgendaDetails; let num=index">
+                  <div class="row mb-2">
+                    <div class="col-lg-10 col-md-9">
+                      <div class=" d-flex align-items-center">
+                        <div class="number-dotted dark-gray-bg border-0">{{agendaItem.AgendaNumber}}.{{agendaDetail.TreeNumber}}</div>
+                        {{agendaDetail.Description}}
+                      </div>
+                      <ng-container *ngIf="agendaDetail.AttachementName !== '' ">
+                        <div class="d-block uploader-preview mt-2 ml-1">
+                          <a class="color-green " title="{{ 'gridAction.View' | translate }}" (click)="viewAgendaAttachmentClick(agendaDetail.AttachementName)">
+                            <span class="font-icon pop icon-preview float-left"></span><span>{{'buttons.previewFile' | translate}}</span>
+                          </a>
+                        </div>
+                      </ng-container>
+                    </div>
+                    <div class="col-lg-2 col-md-3 text-right">
+                      <ng-container *ngIf="AuthService.IsAuthorized(DecisionEditableMode)">
+                        <button class="btn btn-outline-primary" type="button" (click)="onSelectAgendaItem(agendaItem.Id,agendaDetail.Id)">{{'buttons.select' | translate}}</button>
+                      </ng-container>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+            </ng-container>
+          </li>
+        </ul>
+      </div>
+      <div class="download-all-docs">
+        <ng-container *ngIf="AuthService.IsAuthorized(MeetingEditableMode)">
+          <button type="button" class="btn btn-outline-secondary hang ml-1" (click)="mergeFiles(meeting.Id)"><span class="font-icon icon-download"></span> {{'buttons.merge' | translate}}</button>
+          <button type="button" class="btn btn-outline-secondary hang ml-1" (click)="sendMeetingRequest(meeting.Id)"><span class="font-icon icon-download"></span> {{'buttons.sendMeetingRequest' | translate}}</button>
+        </ng-container>
+        <button type="button" class="btn btn-outline-secondary hang ml-1" (click)="viewAgendaAttachmentClick(meeting.MeetingAgendaAttachmnet)"><span class="font-icon icon-download"></span> {{'buttons.ViewMeetingAgenda' | translate}}</button>
+      </div>
+    </div>
+  </div>
+  <div class="skew-bottom-gray z-1 pb-3 mb-4"></div>
+  <!--End Agenda-->
+  <!--Attendance-->
+  <h4 class="page-title mb-3 d-flex align-items-end">
+    <span class="font-icon icon-attendance"></span>
+    <span class="text mr-3">{{'meetings.aboutAttendence' | translate}}</span>
+  </h4>
+  <div class="container-fluid mt-3 mb-5">
+    <div class="row">
+      <div class="col-lg-4 shadow-container attendance-read-only mt-5">
+        <div class="hexagon-test position-relative"><div><div class="font-icon icon-team"></div><span>{{'meetings.councilMembers' | translate}}</span></div></div>
+        <div class="card-body">
+          <div *ngFor="let type of attendCouncilType; let i =index">
+            <div class="row">
+              <div class="col-9"><h6 class="card-title"><span class="font-icon icon-manager"></span> {{type.Name}}</h6></div>
+              <div class="col-3 "><a href="mailto:{{type.Email}}" class="color-black" title="{{'meetings.sendEmail'|translate}}"> <div class="number-dotted float-right"><span class="font-icon icon-paperplane font-7"></span></div> </a></div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 shadow-container mt-5 attendance-read-only">
+        <div class="hexagon-test"><div><div class="font-icon icon-group"></div><span>{{'meetings.innerEmployeesTitle' | translate}}</span></div></div>
+        <div class="card-body">
+          <ng-container *ngIf="attendEmployeeType.length != 0">
+            <div *ngFor="let type of attendEmployeeType; let i =index; let last=last">
+              <div class="row">
+                <div class="col-9"><h6 class="card-title"><span class="font-icon icon-manager"></span> {{type.Name}}</h6></div>
+                <div class="col-3"><a href="mailto:{{type.Email}}" class="color-black" title="{{'meetings.sendEmail'|translate}}"> <div class="number-dotted float-right"><span class="font-icon icon-paperplane font-7"></span></div> </a></div>
+              </div>
+
+              <div class="row color-green attendance-margins">
+                <div class="col-12"><span class="font-weight-bold">{{'meetings.department'|translate}}</span> {{type.DepartmentName}}</div>
+              </div>
+              <!--<ng-container *ngIf="!last">
+                <hr/>
+              </ng-container>-->
+            </div>
+          </ng-container>
+          <ng-container *ngIf="attendEmployeeType.length == 0">
+            <div class="d-flex borders mt-1">
+              <img src="assets/images/information.png" class="img-30" />
+              <h6 class="info ml-1">{{'messages.noEmployee' | translate}}</h6>
+
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+
+      <div class="col-lg-4 shadow-container mt-5 attendance-read-only">
+        <div class="hexagon-test"><div><div class="font-icon icon-visitor"></div><span>{{'meetings.outsideMembers' | translate}}</span></div></div>
+        <div class="card-body">
+          <ng-container *ngIf="attendExternalType.length != 0">
+            <div *ngFor="let type of attendExternalType; let i =index">
+              <div class="row">
+                <div class="col-9"><h6 class="card-title"><span class="font-icon icon-manager"></span> {{type.Name}}</h6></div>
+                <div class="col-3"><a href="mailto:{{type.Email}}" class="color-black" title="{{'meetings.sendEmail'|translate}}"> <div class="number-dotted float-right"><span class="font-icon icon-paperplane font-7"></span></div> </a></div>
+              </div>
+
+              <div class="row color-green attendance-margins">
+                <div class="col-6"><span class="font-weight-bold">{{'meetings.jobDesc'|translate}}</span> {{type.JobDescription}}</div>
+                <div class="col-6">
+                  <span class="font-weight-bold">{{'meetings.outsideMemberCompany'|translate}}</span> {{type.CompanyName}}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="attendExternalType.length == 0">
+            <div class="d-flex borders mt-1">
+              <img src="assets/images/information.png" class="img-30" />
+              <h6 class="info ml-1">{{'messages.noExternalEmployee' | translate}}</h6>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--<div class="container-fluid mt-3">
+    <div class="card-deck">
+      <div class="card">
+        <div id="hex1" class="hexagon-wrapper">
+          <div id="color1" class="hexagon-auto">{{'meetings.councilMembers' | translate}}</div>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let attendence of meeting.MeetingAttendances; let i =index">
+            <h6 class="card-title"><span class="font-icon icon-manager"></span> {{attendence.Name}}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>-->
+</ng-container>
+

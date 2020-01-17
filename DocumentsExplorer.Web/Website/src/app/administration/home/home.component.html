@@ -1,0 +1,19 @@
+<div class="container-fluid mt-5">
+  <div class="card-deck">
+    <div class="card green">
+      <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+      <a class="card-link-overall" [routerLink]="['/admin/hall']"></a>
+      <div class="card-body text-center">
+        <div class="mb-2"><span class="font-icon icon-documents"></span></div>
+        <h5 class="card-title">{{'administration.addingHall' | translate}}</h5>
+      </div>
+    </div>
+    <div class="card orange">
+      <a class="card-link-overall" [routerLink]="['/admin/meetingType']"></a>
+      <div class="card-body text-center">
+        <div class="mb-2"><span class="font-icon icon-qualified"></span></div>
+        <h5 class="card-title">{{'administration.meetingType' | translate}}</h5>
+      </div>
+    </div>
+  </div>
+</div>

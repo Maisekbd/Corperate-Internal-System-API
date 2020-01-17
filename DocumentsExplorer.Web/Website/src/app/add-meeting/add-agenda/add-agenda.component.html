@@ -1,0 +1,198 @@
+
+
+<div [formGroup]="_parentForm">
+  <div formArrayName="AgendaItems">
+    <!--<ng-container *ngIf="displayMsg">
+      <div class="d-flex borders mt-1">
+        <img src="../../../assets/images/information.png" class="img-30" />
+        <h6 class="info ml-1">{{'messages.AddOutsideEmployee' | translate}}</h6>
+      </div>
+    </ng-container>-->
+    <accordion [isAnimated]="true">
+      <div *ngFor="let data of parentForm['controls'].AgendaItems['controls']| sort: 'AgendaNumber'; let i=index; let first = first; let last = last;">
+
+        <div [formGroupName]="i">
+
+          <accordion-group [isOpen]="isFirstOpen" class="mt-2">
+            <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="Id" [rtlEnabled]="rtlEnabled"></dx-text-box>
+            <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="MeetingId" [rtlEnabled]="rtlEnabled"></dx-text-box>
+            <dx-text-box formControlName="RowIndex" [class.d-none]="true"></dx-text-box>
+            <dx-text-box formControlName="AttachementName" [class.d-none]="true"></dx-text-box>
+
+            <div class="row clearfix" accordion-heading>
+
+              <div class="col-md-11">
+                <ng-container *ngIf="data.get('AgendaText').value==''"><div class="font-golden">{{ 'meetings.agendaItemText' | translate }}</div></ng-container>
+                <div class="d-flex align-items-center">
+                  <ng-container *ngIf="data.get('AgendaText').value!=''">
+                    <div class="number-dotted dark-gray-bg border-0">
+                      {{data.get('AgendaNumber').value}}
+                    </div>
+                  </ng-container>{{data.get('AgendaText').value}}
+                </div>
+              </div>
+              <div class="col-md-1 text-center">
+                <div class="action-number">
+                  {{'meetings.numberDetails' | translate}}:
+                  {{data['controls'].AgendaDetails['controls'].length}}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="row pb-2 align-items-start">
+                <div class="col-md-1">
+                  <div class="dx-field">
+                    <div class="dx-field-label">{{ 'meetings.agendaNumber' | translate }}</div>
+                    <div class="dx-field-value">
+                      <dx-number-box [min]="1"
+                                     [max]="20"
+                                     [showSpinButtons]="true"
+                                     formControlName="AgendaNumber"></dx-number-box>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+
+                  <div class="dx-field">
+                    <div class="dx-field-label">{{ 'meetings.agendaItem' | translate }} <span class="ctrl-validation-astrix">*</span></div>
+                    <div class="dx-field-value">
+                      <dx-text-area [height]="80"
+                                    [maxLength]="maxLength"
+                                    formControlName="AgendaText"
+                                    placeholder="{{ 'meetings.agendaItemText' | translate }}">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'meetings.agendaItemText' | translate} }}">
+                          </dxi-validation-rule>
+                          <!--<dx-validator [validationRules]="validationRules.txtAgendaItemValidation"> </dx-validator>-->
+                          <!--<dx-validator>
+                            <dxi-validation-rule type="custom"
+                                                 [validationCallback]="validationCallback"
+                                                 message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'meetings.agendaItemText' | translate} }}">
+                            </dxi-validation-rule>
+                          </dx-validator>-->
+                        </dx-validator>
+                      </dx-text-area>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="dx-field-label"></div>
+                  <dx-file-uploader [rtlEnabled]="rtlEnabled"
+                                    (onValueChanged)="addAgendaParameter($event)"
+                                    [uploadUrl]="uploadURL"
+                                    [uploadHeaders]="headers"
+                                    (onUploaded)="onUploadedFile($event)"
+                                    [multiple]="false"
+                                    accept="*"
+                                    [allowedFileExtensions]="['.pdf']"
+                                    name="{{data.get('RowIndex').value}}"
+                                    uploadMode="instantly">
+                  </dx-file-uploader>
+                  <div class="uploader-positio-absolute uploader-preview " [ngClass]="{'d-none': !editMood}">
+                    <a class="d-inline-block " title="{{ 'gridAction.View' | translate }}" (click)="viewAgendaAttachmentClick(data.get('AttachementName').value)" >
+                      <span class="font-icon icon-preview float-left pop"></span><span>{{'buttons.previewFile' | translate}}</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="dx-field-label"></div>
+                  <button type="button" class="btn btn-secondary pt-11" (click)="addInitDetails(i)">{{'meetings.addDetails' | translate}}</button>
+                  
+                </div>
+                <div class="col-md-1">
+                  <div class="dx-field-label"></div>
+                  <div class="text-right delete-link ">
+                    <a class="delete-link font-30" (click)="onDeleteAgenda(i)"><span class="font-icon icon-delete"></span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div formArrayName="AgendaDetails">
+              <div class="sub-content">
+                <div *ngFor="let detailsData of data['controls'].AgendaDetails['controls']| sort: 'TreeNumber'; let actIndex = index; let first = first; let last = last;">
+
+                  <!--<div class=" d-block" style="visibility: visible">{{'meetings.numberDetails' | translate}}: {{actIndex + 1}}</div>-->
+                  <div [formGroupName]="actIndex">
+                    <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="Id" [rtlEnabled]="rtlEnabled"></dx-text-box>
+                    <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="AgendaItemId" [rtlEnabled]="rtlEnabled"></dx-text-box>
+                    <dx-text-box formControlName="DetailRowIndex" [class.d-none]="true"></dx-text-box>
+                    <dx-text-box formControlName="AttachementName" [class.d-none]="true"></dx-text-box>
+                    <div class="row p-2">
+                      <div class="col-md-1">
+                        <div class="dx-field">
+                          <div class="dx-field-label">{{ 'meetings.treeNumber' | translate }}</div>
+                          <div class="dx-field-value">
+                            <dx-number-box [min]="1"
+                                           [max]="20"
+                                           [showSpinButtons]="true"
+                                           formControlName="TreeNumber"></dx-number-box>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="dx-field">
+                          <div class="dx-field-label">{{'meetings.Details' | translate}}</div>
+                          <div class="dx-field-value">
+                            <dx-text-area [height]="50"
+                                          [maxLength]="maxLength"
+                                          formControlName="Description"
+                                          placeholder="{{ 'meetings.agendaItemText' | translate }}">
+                              <dx-validator>
+                                <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'meetings.agendaItemText' | translate} }}">
+                                </dxi-validation-rule>
+                              </dx-validator>
+                            </dx-text-area>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="dx-field width-full">
+                          <div class="dx-field-label"></div>
+                          <div class="dx-field-value">
+                            <dx-file-uploader [rtlEnabled]="rtlEnabled"
+                                              (onValueChanged)="addAgendaParameter($event)"
+                                              [uploadUrl]="uploadURL"
+                                              [uploadHeaders]="headers"
+                                              (onUploaded)="onUploadedDetailFile($event)"
+                                              [multiple]="false"
+                                              accept="*"
+                                              [allowedFileExtensions]="['.pdf']"
+                                              name="{{detailsData.get('DetailRowIndex').value}}"
+                                              uploadMode="instantly">
+                            </dx-file-uploader>
+                            <div class="uploader-positio-absolute uploader-preview "  [ngClass]="{'d-none': !editMood}">
+                              <a class="d-inline-block" title="{{ 'gridAction.View' | translate }}" (click)="viewAgendaAttachmentClick(detailsData.get('AttachementName').value)">
+                                <span class="font-icon icon-preview float-left pop"></span><span>{{'buttons.previewFile' | translate}}</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 d-flex align-items-center">
+                        <!--<dx-button hint="{{ 'gridAction.View' | translate }}" icon="font-icon icon-preview pop" (onClick)=""  [ngClass]="{'d-none': !editMood}"> </dx-button>-->
+                          <div class="text-right delete-link "><a class="delete-link font-30" (click)="onDeleteDetails(i, actIndex)"><span class="font-icon icon-delete"></span></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </accordion-group>
+
+
+
+
+
+        </div>
+
+      </div>
+    </accordion>
+    <div class="d-flex pb-2">
+      <button type="button" class="btn btn-secondary mt-2" (click)="addInitAgenda()">{{'meetings.addAgendaItem' | translate}}</button>
+      <!--<button class="btn btn-secondary mt-2" (click)="expandAll()">---</button>-->
+    </div>
+  </div>
+</div>

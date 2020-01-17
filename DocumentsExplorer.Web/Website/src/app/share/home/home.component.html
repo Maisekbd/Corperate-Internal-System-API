@@ -1,0 +1,81 @@
+
+<div class="containter">
+  <!-- translation: translation pipe -->
+  <h1>{{ 'demo.title' | translate }}</h1>
+
+  <!-- translation: directive (key as attribute)-->
+  <p [translate]="'demo.text'"></p>
+
+  <p>-In case we want to pass a parameter in translation -</p>
+  <p>{{ 'demo.greeting' | translate:{'name':'Andreas'} }}</p>
+
+  <!-- translation: directive (key as attribute) -->
+  <p [translate]="'demo.greeting'" [translateParams]="{name: 'Andreas'}"></p>
+
+  <!--------------------------------------------------------------------->
+</div>
+
+<div class="containter">
+
+  <div class="card text-center">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Special title treatment</h5>
+      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+
+
+
+  <div class="dx-fieldset">
+    <div class="dx-field">
+      <div class="dx-field-label">Password TextBox</div>
+      <div class="dx-field-value">
+        <dx-text-box value="password"
+                     placeholder="password"
+                     stylingMode="filled"
+                     >
+          <dxi-button name="today" location="after" [options]="passwordButton"></dxi-button>
+        </dx-text-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-label">Multi-currency NumberBox</div>
+      <div class="dx-field-value">
+        <dx-number-box [value]="14500.55"
+                       [(format)]="currencyFormat"
+                       [showClearButton]="true"
+                       [showSpinButtons]="true">
+          <dxi-button name="currency" location="after" [options]="currencyButton"></dxi-button>
+          <dxi-button name="clear"></dxi-button>
+          <dxi-button name="spins"></dxi-button>
+        </dx-number-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-label">Advanced DateBox</div>
+      <div class="dx-field-value">
+        <dx-date-box stylingMode="outlined"
+                     [(value)]="dateValue">
+          <dxi-button name="today" location="before" [options]="todayButton"></dxi-button>
+          <dxi-button name="prevDate" location="before" [options]="prevDateButton"></dxi-button>
+          <dxi-button name="nextDate" location="after" [options]="nextDateButton"></dxi-button>
+          <dxi-button name="dropDown"></dxi-button>
+        </dx-date-box>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,157 @@
+
+<h3 class="page-title mb-3"> <span class="font-icon icon-general"></span><span class="text">{{ 'decisions.decisionsView' | translate }}</span></h3>
+<div class="skew-top-gray z-1"></div>
+<div class="light-gray-bg pb-100 search-content">
+  <div class="container-fluid pt-3 pb-3">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-11">
+        <h4>{{'decisions.SearchGrid' | translate}}</h4>
+      </div>
+    </div>
+    <div class="row" [ngClass]="{ 'dx-rtl': rtlEnabled }">
+      <div class="col-lg-2 d-none d-lg-block"> </div>
+      <div class="col-lg-2 col-md-3 dx-field-value">
+        <dx-select-box [dataSource]="councils$ | async"
+                       valueExpr='Id'
+                       displayExpr="Description"
+                       placeholder="{{ 'CouncilType.Title' | translate }}"
+                       [searchEnabled]="true"
+                       [(value)]="selectedCouncilId"
+                       (onSelectionChanged)="onCouncilChanged($event)"></dx-select-box>
+      </div>
+      <div class="col-lg-3 col-md-5 dx-field-value">
+        <dx-select-box [dataSource]="mainCategoryDS"
+                       valueExpr='Id'
+                       displayExpr="Description"
+                       placeholder="{{ 'MainCategory.Title' | translate }}"
+                       [(value)]="selectedMainCategory"
+                       (onSelectionChanged)="onMainCategoryChanged($event)"
+                       [searchEnabled]="true"></dx-select-box>
+      </div>
+      <div class="col-lg-3 col-md-4 dx-field-value">
+        <dx-select-box [dataSource]="subCategoryDS"
+                       valueExpr='Id'
+                       displayExpr="Description"
+                       placeholder="{{ 'SubCategory.Title' | translate }}"
+                       [(value)]="selectedSubCategory"
+                       (onSelectionChanged)="onSubCategoryChanged($event)"
+                       [searchEnabled]="true"></dx-select-box>
+      </div>
+      <div class="col-lg-2"></div>
+    </div>
+    <div class="row" [ngClass]="{ 'dx-rtl': rtlEnabled }">
+      <div class="col-lg-2 d-none d-lg-block"></div>
+      <div class="col-lg-2 col-md-3">
+        <div class="dx-field-value">
+          <dx-number-box [(value)]="selectedYear"
+                         [showSpinButtons]="true"
+                         [showClearButton]="true"
+                         (onValueChanged)="selectedYearValueChanged($event)"></dx-number-box>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-9">
+        <div class="dx-field-value">
+          <dx-text-box [(value)]="searchtxt" mode='search' (onValueChanged)="refreshDecisions()" [showClearButton]="false"></dx-text-box>
+        </div>
+      </div>
+      <div class="col-lg-2 d-none d-lg-block"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid ">
+
+  <div class="shadow-container negative-mt-100 pos-rel z-10">
+    <div class="row" [ngClass]="{ 'dx-rtl': rtlEnabled }">
+      <div class="col-md-12 resposive-grid">
+        <dx-data-grid [dataSource]="decisionsDS"
+                      [remoteOperations]="true"
+                      [rtlEnabled]="rtlEnabled"
+                      [columnHidingEnabled]="true"
+                      [showColumnLines]="false"
+                      [showRowLines]="false"
+                      [showBorders]="false"
+                      [rowAlternationEnabled]="false"
+                      [hoverStateEnabled]="true">
+          <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+          <dxo-sorting mode="multiple"></dxo-sorting>
+          <dxo-export [enabled]="true" fileName="Operations" [allowExportSelectedData]="false" placement="bottom" ngbTooltip="إدارة النظام"
+                      tooltipClass="my-custom-class" class="text-green"></dxo-export>
+          <dxo-header-filter [visible]="true"></dxo-header-filter>
+          <dxo-filter-row [visible]="false"></dxo-filter-row>
+          <dxo-editing mode="row" [allowDeleting]="true" [useIcons]="true"></dxo-editing>
+          <dxo-search-panel [visible]="false" placeholder="{{ 'decisions.SearchGrid' | translate }}"></dxo-search-panel>
+          <dxo-grouping [contextMenuEnabled]="true" expandMode="rowClick"></dxo-grouping>
+          <dxo-group-panel [visible]="false" emptyPanelText="Use the context menu of header columns to group data"></dxo-group-panel>
+          <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]" [showInfo]="true" [showNavigationButtons]="true">
+          </dxo-pager>
+          <dxo-selection mode="single"></dxo-selection>
+          <dxi-column dataField="DecisionNumber" [caption]="formatMessage('DecisionNumber','')" dataType="string" [width]="160" cellTemplate="cellTemplate"
+                      [allowFiltering]="true" [allowHeaderFiltering]="false" [sortIndex]="1" sortOrder="asc"></dxi-column>
+
+          <dxi-column dataField="Subject" [caption]="formatMessage('Subject','')" [width]="170"
+                      [allowFiltering]="true" [allowHeaderFiltering]="false"></dxi-column>
+          <dxi-column dataField="CouncilTypeId" [calculateCellValue]="ShowCouncilDescription" [calculateFilterExpression]="CouncilFilterExpression" [caption]="formatMessage('CouncilType','')"
+                      [hidingPriority]="0" [allowFiltering]="false" [allowHeaderFiltering]="true">
+            <dxo-header-filter [dataSource]="CouncilFilterGridDS"></dxo-header-filter>
+          </dxi-column>
+          <dxi-column dataField="MainCategoryId" [calculateCellValue]="ShowMainCategoryDescription" [caption]="formatMessage('MainCategory','')" [hidingPriority]="0"
+                      [allowFiltering]="false" [allowHeaderFiltering]="true">
+            <dxo-header-filter [dataSource]="MainCategoryFilterGridDS"></dxo-header-filter>
+          </dxi-column>
+          <dxi-column dataField="SubCategoryId" [calculateCellValue]="ShowSubCategoryDescription" [caption]="formatMessage('SubCategory','')" [hidingPriority]="0"
+                      [allowFiltering]="false" [allowHeaderFiltering]="true">
+            <dxo-header-filter [dataSource]="SubCategoryFilterGridDS"></dxo-header-filter>
+          </dxi-column>
+          <dxi-column dataField="CountryId" [calculateCellValue]="ShowCountryDescription" [caption]="formatMessage('Country','')" [hidingPriority]="0" [width]="120"
+                      [allowFiltering]="false" [allowHeaderFiltering]="true">
+            <dxo-header-filter [dataSource]="CountryFilterGridDS"></dxo-header-filter>
+          </dxi-column>
+          <dxi-column dataField="ConferenceYear" [caption]="formatMessage('Year','')" [hidingPriority]="0" [width]="80" [sortIndex]="0" sortOrder="desc"></dxi-column>
+          <dxi-column dataField="DecisionStatus" [width]="80" [caption]="formatMessage('Status','')" dataType="string" cellTemplate="DecisionStatusTemplate" [allowSorting]="false"
+                      [allowFiltering]="false" [allowHeaderFiltering]="true">
+            <dxo-header-filter [dataSource]="DecisionStatusDS"></dxo-header-filter>
+          </dxi-column>
+          <dxi-column [caption]="formatMessage('View','')" type="buttons" [width]="60" [allowFiltering]="true" [allowHeaderFiltering]="false">
+            <dxi-button hint="{{ 'gridAction.View' | translate }}" icon="font-icon icon-preview pop" [visible]="true" [onClick]="viewClick"></dxi-button>
+          </dxi-column>
+          <dxi-column [caption]="formatMessage('Download','')" type="buttons" [width]="50">
+            <dxi-button hint="{{ 'gridAction.Download' | translate }}" icon="font-icon icon-download hang" [visible]="true" [onClick]="downloadClick"></dxi-button>
+          </dxi-column>
+
+          <ng-container *ngIf="AuthService.IsAuthorized(EditableMode)">
+            <dxi-column [caption]="formatMessage('Edit','')" type="buttons" [width]="50">
+              <dxi-button hint="{{ 'gridAction.Edit' | translate }}" icon="font-icon icon-edit pulse" [visible]="true" [onClick]="editClick"></dxi-button>
+            </dxi-column>
+            <dxi-column [caption]="formatMessage('Delete','')" type="buttons" [width]="50">
+              <dxi-button name="delete" hint="{{ 'gridAction.Delete' | translate }}" placement="bottom" icon="font-icon icon-delete delete-link"></dxi-button>
+            </dxi-column>
+          </ng-container>
+
+          <div *dxTemplate="let data of 'cellTemplate'">
+            <a (click)="viewDecision(data)" class="lnk-icon"><span class="font-icon icon-view float-left"></span>{{data.value}}</a>
+          </div>
+
+
+          <div *dxTemplate="let data of 'DecisionStatusTemplate'" class="text-center">
+            <span>{{ ("EnumDecisionStatus." + data.value) | translate}}</span>
+            <!--<div [ngSwitch]="data.value">
+      <div *ngSwitchCase="0">
+        <span>{{ ("EnumDecisionStatus." + data.value) | translate}}</span>
+      </div>
+      <div *ngSwitchCase="1">
+        <span>{{ ("EnumDecisionStatus." + data.value) | translate}}</span>
+      </div>
+      <div *ngSwitchCase="2">
+        <span>{{ ("EnumDecisionStatus." + data.value) | translate}}</span>
+      </div>
+    </div>-->
+          </div>
+        </dx-data-grid>
+      </div>
+    </div>
+
+  </div>
+</div>
+

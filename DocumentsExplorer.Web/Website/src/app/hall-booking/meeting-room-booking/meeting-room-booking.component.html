@@ -1,0 +1,158 @@
+<h3 class="page-title mb-3"> <span class="font-icon icon-leaf-calendar"></span><span class="text">{{'meetingroom.booking' | translate}}</span></h3>
+<div class="container-fluid">
+  <div class="row pb-5">
+    <div class="col-12">
+      <!--[dataSource]="appointmentDS"-->
+      <!--[dataSource]="appointments$ | async"-->
+      <!--[views]="views"-->
+      <dx-scheduler #scheduler
+                    [dataSource]="appointmentDS"
+                    [timeZone]="currentLocation"
+                    [remoteFiltering]="true"
+                    currentView="day"
+                    [currentDate]="currentDate"
+                    [startDayHour]="7"
+                    [endDayHour]="17"
+                    [height]="700"
+                    textExpr="Title"
+                    startDateExpr="StartDate"
+                    [rtlEnabled]="rtlEnabled"
+                    [adaptivityEnabled]="adaptivityEnabled"
+                    endDateExpr="EndDate"
+                    allDayExpr="AllDay"
+                    appointmentTemplate="bookingTemplate"
+                    appointmentTooltipTemplate="tooltipTemplate"
+                    (onAppointmentDblClick)="appointmentDblClick($event)"
+                    (onAppointmentRendered)="onAppointmentRendered($event)"
+                    [crossScrollingEnabled]="adaptivityEnabled?true:false"
+                    (onCellClick)="cellClick($event)">
+        <dxo-editing #editingOptions
+                     [allowAdding]="false"
+                     [allowDeleting]="false"
+                     [allowUpdating]="false"
+                     [allowResizing]="false"
+                     [allowDragging]="false"></dxo-editing>
+        <div *dxTemplate="let appointmentsData of 'bookingTemplate'">
+          <div class="showtime-preview">
+            <div>{{appointmentsData.Title}} </div>
+            <ng-container *ngIf="!adaptivityEnabled">
+              <div style="direction: ltr !important;">
+                <span> {{appointmentsData.StartDate| date: 'hh:mm a'}} - {{appointmentsData.EndDate | date: 'hh:mm a'}}</span>
+              </div>
+            </ng-container>
+          </div>
+
+        </div>
+
+        <div *dxTemplate="let model of 'tooltipTemplate'">
+          <div class='booking-tooltip'>
+            <div class="row">
+              <div class="col-3">
+                <h3 class="booking-tooltip-title mb-3">
+                  <span class="font-icon icon-leaf-calendar"></span>
+                </h3>
+              </div>
+              <div class="col-9">
+                <div class='booking-info'>
+                  <div class='booking-title'>
+                    <p><strong>{{'hall-booking-request.title' | translate}}: </strong>{{model.Title}}</p>
+                  </div>
+                  <div>
+                    <p><strong>{{'hall-booking-request.hall' | translate}}: </strong>{{model.HallName}}</p>
+                  </div>
+                  <div style="direction: ltr !important;">
+                    <p>{{model.StartDate| date: 'hh:mm a'}} - {{model.EndDate | date: 'hh:mm a'}}</p>
+                  </div>
+                  <div>
+                    <ng-container *ngIf="authSvc.IsAuthorized(EditableMode) || model.IsEditable">
+                      <dx-button (onClick)="deleteBookingRequest($event,model.Id)" icon="trash" class="mr-1 ml-1"></dx-button>
+                      <dx-button (onClick)="EditBookingRequest($event,model.Id)" icon="edit" class="mr-1  ml-1"></dx-button>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+          <h4>{{model.Name}}</h4>
+
+
+
+        </div>
+        <dxi-view name="{{'meetingroom.3days' | translate}}"
+                  type="day"
+                  [intervalCount]="3"
+                  [maxAppointmentsPerCell]="2"
+                  [startDate]="daysViewStartDate">
+        </dxi-view>
+        <dxi-view name="{{'meetingroom.workWeek' | translate}}"
+                  type="week"
+                  [intervalCount]="1"
+                  [maxAppointmentsPerCell]="2"
+                  [startDate]="weeksViewStartDate">
+        </dxi-view>
+        <dxi-view name="{{'meetingroom.month' | translate}}"
+                  type="month"
+                  [intervalCount]="1">
+        </dxi-view>-->
+        <!--<dxi-resource fieldExpr="Location"
+                                       [dataSource]="locationDS" [useColorAsDefault]="true">
+    </dxi-resource>-->
+        <!--<dxi-resource fieldExpr="ownerId"
+                  label="Owner"
+                  [allowMultiple]="true"
+                  [dataSource]="owners"
+                  [useColorAsDefault]="selectedResource === 'Owner'">
+    </dxi-resource>-->
+      </dx-scheduler>
+      <!--[views]='["day", "workWeek", "month"]'-->
+      <!--<dx-scheduler #scheduler [dataSource]="appointmentsData"
+              adaptivityEnabled=true
+              [views]="views"
+              currentView="week"
+              [startDayHour]="7"
+              [endDayHour]="17"
+              startDateExpr="StartDate"
+              endDateExpr="EndDate"
+              textExpr="Name"
+              [currentDate]="currentDate"
+              [height]="580"
+
+              appointmentTemplate="bookingTemplate"
+              appointmentTooltipTemplate="tooltipTemplate"
+              (onAppointmentFormOpening)="onAppointmentFormOpening($event)">
+
+
+
+
+
+  <dxi-view name="{{'meetingroom.3days' | translate}}"
+            type="day"
+            [intervalCount]="3"
+            [startDate]="daysViewStartDate">
+  </dxi-view>
+  <dxi-view name="{{'meetingroom.workWeek' | translate}}"
+            type="week"
+            [intervalCount]="2"
+            [startDate]="weeksViewStartDate">
+  </dxi-view>
+  <dxi-view name="{{'meetingroom.month' | translate}}"
+            type="month"
+            [intervalCount]="1">
+  </dxi-view>-->
+      <!--<dxi-resource fieldExpr="Location"
+                label="{{'meetingroom.location' | translate}}"
+                displayExpr= "NameAr"
+                valueExpr="Id"
+                [dataSource]="locationDS">
+  </dxi-resource>
+  <dxi-resource fieldExpr="MeetingroomId"
+                label="{{'meetingroom.availableRoom' | translate}}"
+                [dataSource]="HallData"></dxi-resource>-->
+      <!--</dx-scheduler>-->
+      <app-booking-request-popup></app-booking-request-popup>
+    </div>
+  </div>
+</div>

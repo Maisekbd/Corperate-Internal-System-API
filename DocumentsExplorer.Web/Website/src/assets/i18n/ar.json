@@ -1,0 +1,279 @@
+{
+  "demo": {
+    "title": "لغرض التجربة",
+    "text": "تجريب الترجمة ",
+    "greeting": "مرحبا {{name}}"
+  },
+  "header": {
+    "appTitle": "القرارات",
+    "greeting": "مرحبا, {{name}}",
+    "department": "{{dept}}",
+    "signOut": "خروج",
+    "admin": "إدارة النظام",
+    "menu": {
+      "main": "الرئيسية",
+      "decisions": "القرارات",
+      "meetings": "الإجتماعات",
+      "showAll": "عرض الجميع",
+      "addDecision": "إضافة قرار",
+      "addMeeting": "إضافة إجتماع",
+      "reports": "التقارير",
+      "decisionStatus": "حالة القرارات بالاجتماع",
+      "hallBooking": "حجز قاعات"
+    }
+  },
+
+
+  "footer": {
+    "copyRight": "جميع الحقوق محفوظة  © للهيئة العربية للاستثمار الزراعي"
+  },
+
+  "login": {
+    "firstLevelHeader": "تسجيل الدخول",
+    "seconLevelHeader": "مرحبا",
+    "UserMail": "البريد الإلكتروني",
+    "Password": "كلمة المرور",
+    "InvaildLogin": "يوجد خطأ في البريد أو كلمة المرور"
+  },
+  "CouncilType": {
+    "Title": "المجلس"
+  },
+  "MainCategory": {
+    "Title": "التصنيف الرئيسي",
+    "placeholder": "قم باختيار التصنيف الرئيسيي للقرار"
+  },
+  "SubCategory": {
+    "Title": "التصنيف الفرعي",
+    "placeholder": "قم باختيار التصنيف الفرعي للقرار"
+  },
+  "messages": {
+    "meetingDateTime": "يرجى اختيار الزمن والتاريخ لاجتماعك",
+    "suggestedDecsionExecutionDate": "يرجى اختيار التاريخ المتوقع للتنفيذ",
+    "selectCouncilMember": "يجب إختيار المجلس لاختيار الاعضاء",
+    "choosenEmployees": "يرجى اختيار الموظفون من قائمة الموظفون",
+    "AddOutsideEmployee": "يرجى، الضغط على ’اضافة موظف’  لاضافة واحد أو أكثر ",
+    "txtRequiredMessage": "الرجاء إدخال {{reuiredField}}",
+    "txtPattern": "الرجاء إدخال {{reuiredField}} بالنموذج التالي رقم القرار_السنة مثال 12_2015",
+    "txtSelectOneMessage": "الرجاء إختيار {{reuiredField}} واحد على الأقل",
+    "txtSelectWithMinMessage": "الرجاء إختيار {{count}} على الأقل لـ {{reuiredField}}",
+    "txtMoreThanMessage": "الرجاء إدخال قيمة أكبر من {{minValue}} لـ {{fieldName}}",
+    "txtEmailNotVaild": "يرجى إدخال الايميل بالصيغه الصحيحة",
+    "txtDublicate": "يوجد تكرار في رقم {{field}}",
+    "noExternalEmployee": "لا يوجد حضور من شركات",
+    "noEmployee": "لا يوجد حضور من الهيئة",
+    "doesntHave": "لا يوجد محتوى",
+    "notExecuted": "هذا القرار لا ينفذ",
+    "meetingConfirmAdding": "هل تريد حفظ الاجتماع؟",
+    "decisionConfirmAdding": "هل تريد حفظ القرار؟",
+    "noExecutionDate": "لم يتم الانتهاء من التنفيذ بعد",
+    "uploadedDecisionFilePattern": "يرجى، تسمية الملف ‘15_2019‘، 15 هو رقم القرارو 2019 هو سنة القرار",
+    "doesntHaveDecisions": "هذا الاجتماع ليس لديه اي قرارات"
+  },
+  "dateCtrl": {
+    "date": "التاريخ",
+    "time": "الزمن"
+  },
+  "buttons": {
+    "save": "حفظ",
+    "print": "طباعة",
+    "yes": "نعم",
+    "no": "لا",
+    "cancel": "الغاء",
+    "select": "اختار",
+    "selectAnotherAgenda": "اختيار اجندة أخرى",
+    "selectAnotherMeeting": "اختيار اجتماع آخر",
+    "addDecision": "اضافة قرار",
+    "preview": "استعراض",
+    "next": "التالي",
+    "previous": "السابق",
+    "previewFile": "استعراض الملف",
+    "merge": "دمج جميع الملفات",
+    "ViewMeetingAgenda": "استعراض محضر الإجتماع",
+    "sendMeetingRequest": "إرسال الدعوة"
+  },
+  "decisions": {
+    "title": "القرار",
+    "number": "رقم القرار",
+    "execute": "يتطلب تنفيذ",
+    "notExecute": "لا ينفذ",
+    "previewDecisionFilePDF": "تحميل القرار (PDF)",
+    "add": "إضافة قرار",
+    "decisionsView": "عرض القرارات",
+    "SearchGrid": "بحث عن قرار",
+    "agendaItem": "بنود الاجتماع",
+    "reference": "المراجع",
+    "decisionReference": "المرجع ونص القرار",
+    "agendaItemDesc": "قم باختيار البند الذي تريد اضافة قرار له",
+    "referenceDesc": "قم باختيار نوع المرجع، وفي حالة كان النوع قرار، يرجى البحث عن القرار",
+    "referenceTypeCtrl": "اختار نوع المرجع",
+    "referenceType": "النوع",
+    "uploadReference": "ارفاق ملف",
+    "comments": "ملاحظات",
+    "decision": "القرار",
+    "addReference": "إضافة مرجع",
+    "brief": "عن القرار",
+    "briefDesc": "مختصر عن نص القرار",
+    "affectedBy": "المتأثرون بالقرار",
+    "affectedByDesc": "اختار المتأثرون بإتخاذ القرار",
+    "decisionFilePDF": "رفع وثيقة القرار(PDF)",
+    "decisionTxt": "نص القرار",
+    "tags": "الكلمات التصنيفية",
+    "executed": "قابل للتنفيذ؟",
+    "execution": "تنفيذ القرار",
+    "executors": "المسؤولون عن التنفيذ",
+    "executor": "المنفذ",
+    "singleExecutor": "الإدارة المعنية بالتنفيذ",
+    "actions": "الاجراءات",
+    "addExecutors": "إضافة منفذ",
+    "deleteExecutors": "حذف منفذ",
+    "meetingInfo": "معلومات الاجتماع",
+    "meetingNo": "الرقم التسلسلي",
+    "meeting": "اجتماع",
+    "forYear": "لعام",
+    "ConferenceYear ": "لعام",
+    "meetingLocation": "المكان",
+    "meetingDate": "التاريخ",
+    "AgendaItem": "البند الرئيسي",
+    "AgendaDetail": "البند الفرعي",
+    "ActionType": "الإجراء المطلوب",
+    "suggestedDecsionExecutionDate": "التاريخ المتوقع للتنفيذ",
+    "mainType": "النوع الرئيسي",
+    "subType": "النوع الفرعي",
+    "type": "نوع القرار",
+    "ExecuteDecision": "تنفيذ القرار",
+    "ExecuteDate": "تاريخ التنفيذ ",
+    "status": "الحالة"
+  },
+  "decisionTypes": {
+    "DecisionType": "نوع القرار",
+    "placeholder": "نوع القرار"
+  },
+  "meetings": {
+    "title": "الاجتماع",
+    "jobDesc": "الوظيفة",
+    "sendEmail": " ارسال بريد الكتروني",
+    "meetingNo": "الرقم التسلسلي",
+    "meetingInfo": "معلومات الاجتماع",
+    "meetingTitle": "اجتماع",
+    "date": "التاريخ",
+    "add": "إضافة اجتماع",
+    "aboutMeeting": "عن الاجتماع",
+    "location": "المكان",
+    "council": "المجلس",
+    "chooseCouncil": "قم باختيار المجلس",
+    "aboutAttendence": " الحضور",
+    "councilMembers": "اعضاء المجلس",
+    "innerEmployeesTitle": "من الهيئة",
+    "innerEmployees": "الموظفون",
+    "innerEmployeesAttendence": "الموظفون المختارون لحضور الاجتماع",
+    "outsideMembers": "من شركات",
+    "outsideMemberName": "اسم الموظف",
+    "outsideMemberEmail": "البريد الالكتروني",
+    "outsideMemberCompany": "شركته",
+    "outsideMemberNameCtrl": "اسم الموظف",
+    "outsideMemberJobDescription": "الوصف الوظيفي",
+    "outsideMemberCompanyCtrl": "اسم الشركة التي يعمل بها",
+    "AddOutsideEmp": "اضافة موظف",
+    "agenda": "أجندة الاجتماع",
+    "addAgendaItem": "اضافة بند للأجندة",
+    "agendaItem": "العنصر",
+    "agendaItemText": "بند الأجندة",
+    "agendaNumber": "رقم البند",
+    "addDetails": "اصافة بند فرعي",
+    "Details": "الإجراء",
+    "detailsResponsiblity": "المسؤول عنه",
+    "numberDetails": "إجراء",
+    "ViewMeetings": "إستعراض الإجتماعات",
+    "treeNumber": "رقم البند الفرعي",
+    "department": "الإدارة",
+    "SearchGrid": "بحث عن اجتماع",
+    "country": "البلد"
+  },
+
+
+
+  "gridAction": {
+    "View": "إستعراض",
+    "Download": "تحميل الملف",
+    "Edit": "تحرير",
+    "Delete": "حذف"
+  },
+
+  "dashboard": {
+    "latestDecisions": "اخر القرارات",
+    "notifications": "تنبيهات",
+    "meetings": "الاجتماعات",
+    "viewAll": "عرض الجميع",
+    "decisionNum": "رقم القرار",
+    "for": "ل",
+    "year": "لسنة",
+    "dept": "الادارة",
+    "action": "الإجراء",
+    "percent": "نسبة الإنجاز",
+    "executeDecision": "قرارات للتنفيذ",
+    "agenda": "أجندة",
+    "country": "البلد",
+    "date": "بتاريخ"
+  },
+  "DecisionStatusEnum": {
+    "0": "لم يبدأ التنفيذ",
+    "1": "تحت التنفيذ",
+    "2": "تم التنفيذ"
+  },
+  "ActionTypeEnum": {
+    "1": "للاستشارة",
+    "2": "للتنفيذ",
+    "3": "حفظ",
+    "4": "للعلم",
+    "5": "للمراجعة",
+    "6": "تحتاج تواصل"
+  },
+
+  "EnumDecisionStatus": {
+    "0": "لم يبدأ التنفيذ",
+    "1": "تحت التنفيذ",
+    "2": "تم التنفيذ"
+  },
+  "LocationEnum": {
+    "0": "دبي",
+    "1": "السودان"
+  },
+  "meetingroom": {
+    "booking": "حجز قاعة اجتماع",
+    "3days": "3 أيام",
+    "workWeek": "اسبوع",
+    "oneWorkWeek": "اسبوع",
+    "month": "شهر",
+    "availableRoom": "الغرف المتاحة في ذلك الوقت",
+    "location": "المكان",
+    "hallsTitle": "القاعات",
+    "searchTxt": "بحث عن قاعه"
+  },
+  "meetingType": {
+    "title": "نوع الاجتماع",
+    "searchTxt": "بحث عن نوع الإجتماع"
+  },
+  "hall-booking-request": {
+    "popUptitle": "معلومات حجز القاعه",
+    "title": "عنوان الإجتماع",
+    "meetingType": "نوع الإجتماع",
+    "fromDate": "من",
+    "toDate": "إلى",
+    "location": "المكان",
+    "hall": "القاعه",
+    "dubaiHall": "القاعه-دبي",
+    "sudanHall": "القاعه-السودان",
+    "buttons": {
+      "save": "حفظ",
+      "cancel": "إلغاء"
+    }
+  },
+  "hallBookingMessages": {
+    "deleteConfirmStr": "هل تريد حذف طلب الحجز؟",
+    "deleteConfirmTitle": "تأكيد الحذف"
+  },
+  "administration": {
+    "addingHall": "إضافة قاعة",
+    "meetingType": "إضافة نوع اجتماع"
+  }
+}

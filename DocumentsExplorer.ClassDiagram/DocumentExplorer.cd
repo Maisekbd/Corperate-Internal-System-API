@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DocumentsExplorer.ClassDiagram.Decision">
+    <Position X="10.5" Y="5.5" Width="2" />
+    <AssociationLine Name="Action" Type="DocumentsExplorer.ClassDiagram.Action" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.312" Y="7.95" />
+        <Point X="12.312" Y="8.438" />
+        <Point X="14.75" Y="8.438" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="AgendaItem" Type="DocumentsExplorer.ClassDiagram.AgendaItem" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.75" Y="7.95" />
+        <Point X="11.75" Y="9.953" />
+        <Point X="13" Y="9.953" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ReferenceDecision" Type="DocumentsExplorer.ClassDiagram.Decision" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.5" Y="6.236" />
+        <Point X="8.375" Y="6.236" />
+        <Point X="8.375" Y="5.427" />
+        <Point X="10.75" Y="5.427" />
+        <Point X="10.75" Y="5.5" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Country" Type="DocumentsExplorer.ClassDiagram.Country" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.5" Y="6.653" />
+        <Point X="6.411" Y="6.653" />
+        <Point X="6.411" Y="5.996" />
+        <Point X="6.25" Y="5.996" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="SubCategory" Type="DocumentsExplorer.ClassDiagram.SubCategory" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.938" Y="5.5" />
+        <Point X="11.938" Y="4.25" />
+        <Point X="9.25" Y="4.25" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Companys" Type="DocumentsExplorer.ClassDiagram.Company" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.375" Y="5.5" />
+        <Point X="12.375" Y="4.625" />
+        <Point X="14.25" Y="4.625" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAQAoAAAkJACAMgDAAAAAgAAAAAiAQ=</HashCode>
+      <FileName>Decision.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DecisionType" />
+      <Property Name="Action" />
+      <Property Name="AgendaItem" />
+      <Property Name="ReferenceDecision" />
+      <Property Name="Country" />
+      <Property Name="SubCategory" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ActivitySectors" />
+      <Property Name="DecisionActions" />
+      <Property Name="Companys" />
+      <Property Name="ReferenceItems" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.DecisionType">
+    <Position X="4.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DecisionType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.Meeting">
+    <Position X="6.25" Y="9.75" Width="2" />
+    <AssociationLine Name="Attendence" Type="DocumentsExplorer.ClassDiagram.Attendence" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.25" Y="11.5" />
+        <Point X="8.625" Y="11.5" />
+        <Point X="8.625" Y="11.501" />
+        <Point X="10" Y="11.501" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>CQAAAAAAAAAAAAAQAAIABAACAAEABAABAIAAAAMAAQA=</HashCode>
+      <FileName>Meeting.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Round" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Attendence" />
+      <Property Name="AgendaItem" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.AgendaItem">
+    <Position X="13" Y="9.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAIgAAIAAAABAAAAAAAAAEAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>MinutesOfMeeting.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Actions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.Attendence">
+    <Position X="10" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAABAgAAACAAAAAAEAAAAEQAAAAAgAAgAAAAAIAAAAA=</HashCode>
+      <FileName>Attendence.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CouncilMember" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.CouncilType">
+    <Position X="3.25" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAABIAAAA=</HashCode>
+      <FileName>CouncilType.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CouncilMembers" />
+      <Property Name="Rounds" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.CouncilMember">
+    <Position X="7.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAACAAQgEIAAAAQAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CouncilMember.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.Action">
+    <Position X="14.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAgAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Action.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.Country">
+    <Position X="4.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Country.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.SubCategory">
+    <Position X="7.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SubCategory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MainCategory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.ActivitySector">
+    <Position X="4.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ActivitySector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.Company">
+    <Position X="14.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Company.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.DecisionAction">
+    <Position X="19.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAgAEAAAAAAAAAAAAAEAABAQCAAAAAAAA=</HashCode>
+      <FileName>DecisionAction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Attachments" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.Attachment">
+    <Position X="21" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAQAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Attachment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.MainCategory">
+    <Position X="6.75" Y="2.25" Width="1.5" />
+    <AssociationLine Name="CouncilType" Type="DocumentsExplorer.ClassDiagram.CouncilType" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.75" Y="2.684" />
+        <Point X="2.875" Y="2.684" />
+        <Point X="2.875" Y="11.897" />
+        <Point X="3.25" Y="11.897" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>MainCategory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CouncilType" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.Round">
+    <Position X="3.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAABAAA=</HashCode>
+      <FileName>Round.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.DepartmentCoordinator">
+    <Position X="14" Y="14.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAgAAAAAAAAAgAAAAAAAAAAQAAAAACAAA=</HashCode>
+      <FileName>DepartmentCoordinator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.Notification">
+    <Position X="20.75" Y="7.75" Width="1.5" />
+    <AssociationLine Name="Decision" Type="DocumentsExplorer.ClassDiagram.Decision" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20.75" Y="9.778" />
+        <Point X="19.24" Y="9.778" Type="JumpStart" />
+        <Point X="19.073" Y="9.778" Type="JumpEnd" />
+        <Point X="18.875" Y="9.778" />
+        <Point X="18.875" Y="6.313" />
+        <Point X="12.5" Y="6.313" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IQQAAAAAAAAAAGAAAAABAAAAAAAAAQAAAAAAAAACAQA=</HashCode>
+      <FileName>Notification.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Decision" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DocumentsExplorer.ClassDiagram.ReferenceItem">
+    <Position X="18.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAIAAAAAAAQAAAAAAAAAAAEAAAAIAAA=</HashCode>
+      <FileName>RelatedItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

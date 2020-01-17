@@ -1,0 +1,48 @@
+﻿@using DocumentsExplorer.DTO;
+@using DocumentsExplorerResources = DocumentsExplorer.Website.Resources.DocumentsExplorerResource;
+@using SharedResources = DocumentsExplorer.Website.Resources.SharedResource;
+@model DecisionDTO
+
+
+<div id="divBudgetSection" style="display:none;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div><label class="lbl-in-row"> @DocumentsExplorerResources.txtContributorsProfitPercentage %</label> </div>
+                    <div>
+                        @Html.TextBoxFor(c => c.ContributorsProfitPercentage, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div><label class="lbl-in-row"> @DocumentsExplorerResources.txtLegalReserve %</label> </div>
+                    <div>
+                        @Html.TextBoxFor(c => c.LegalReserve, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div><label class="lbl-in-row"> @DocumentsExplorerResources.txtPalestineSupport %</label> </div>
+                    <div>
+                        @Html.TextBoxFor(c => c.PalestineSupport, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div><label class="lbl-in-row"> @DocumentsExplorerResources.txtMainReserve %</label> </div>
+                    <div>
+                        @Html.TextBoxFor(c => c.MainReserve, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

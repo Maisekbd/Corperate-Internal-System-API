@@ -1,0 +1,185 @@
+﻿@using DocumentsExplorer.DTO;
+@using DocumentsExplorerResources = DocumentsExplorer.Website.Resources.DocumentsExplorerResource;
+@using SharedResources = DocumentsExplorer.Website.Resources.SharedResource;
+@model CompanyDTO
+
+<div class="box box-success">
+    <div class="box-header with-border">
+        @if (Model.Id == 0)
+        {
+            <h3 class="box-title">@DocumentsExplorerResources.txtNewCompanyTitle</h3>
+        }
+        else
+        {
+            <h3 class="box-title">@DocumentsExplorerResources.txtEditCompanyTitle</h3>
+
+        }
+    </div>
+    @using (Html.BeginForm("Create", "Company", FormMethod.Post, new { enctype = "multipart/form-data", @id = "CompanyCreateFormId" }))
+    {
+        <div class="box-body">
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(c => c.Id)
+            @Html.HiddenFor(c => c.CreateDate)
+            @Html.HiddenFor(c => c.CreatedBy)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div><label class="lbl-in-row"> @DocumentsExplorerResources.txtName</label> </div>
+                            <div>
+                                @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div><label class="lbl-in-row"> @DocumentsExplorerResources.txtDateOfIncorporation</label> </div>
+                            <div class="k-rtl">
+                                @(Html.Kendo().DatePickerFor(c => c.DateOfIncorporation)
+                                                                            .Name("DateOfIncorporation")
+                                                                            .Format("dd/MM/yyyy")
+                                                                             .Culture("ar-AE")
+                                                                            //.Value(DateTime.Now)
+                                                                            .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                                                                            .DateInput()
+                                )
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div><label class="control-label">@DocumentsExplorerResources.txtCountry</label></div>
+                            <div>
+                                @(Html.Kendo().DropDownListFor(c => c.CountryId)
+                                     .Name("CountryId")
+                                     .DataTextField("Name")
+                                     .DataValueField("Id")
+                                     .OptionLabel(DocumentsExplorerResources.txtCountrySelectValue)
+                                     .DataSource(source =>
+                                     {
+                                         source.Read(read => { read.Action("ReadCountries", "Company"); });
+                                     })
+                                     .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                                )
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div><label class="lbl-in-row"> @DocumentsExplorerResources.txtCompanyActivityDescription</label> </div>
+                            <div>
+                                @Html.TextAreaFor(c => c.Description, new { cols = "25", rows = "3", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div><label class="lbl-in-row"> @DocumentsExplorerResources.txtSectors</label> </div>
+                            <div class="k-rtl">
+                                @(Html.Kendo().MultiSelectFor(c => c.SelectedSectors)
+                                                           .Name("SelectedSectors")
+                                                           .DataTextField("Name")
+                                                           .DataValueField("Id")
+                                                           .Value(Model.ActivitySectors)
+                                                            .DataSource(source =>
+                                                            {
+                                                                source.Read(read =>
+                                                                {
+                                                                    read.Action("ReadActivitySectors", "Company");
+                                                                })
+                                                                .ServerFiltering(true);
+                                                            })
+                                                           .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                                )
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            @if (Model.Id != 0)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div><label class="lbl-in-row"> @DocumentsExplorerResources.txtContributors</label> </div>
+                                <div class="k-rtl">
+                                    @(Html.Kendo().Grid<ContributorDTO>(Model.Contributors)
+                                               .Name("Contributorgrid")
+                                               .Columns(columns =>
+                                               {
+                                                   columns.Bound(c => c.Id).Visible(false);
+                                                   columns.Bound(p => p.Name).Title(DocumentsExplorerResources.txtName);
+                                                   columns.Bound(p => p.CreateDate).Hidden(true);
+                                                   columns.Bound(p => p.CreatedBy).Hidden(true);
+                                                   columns.Bound(p => p.CompanyId).Hidden(true);
+                                                   columns.Command(command => { command.Edit().Text(SharedResources.txtEdit).UpdateText(SharedResources.btnSave).CancelText(SharedResources.btnSave); command.Destroy().Text(SharedResources.txtDelete); }).Width(250);
+                                               })
+                                               .ToolBar(toolbar => toolbar.Create().Text(SharedResources.txtNewRecord))
+                                               .Editable(editable => editable.Mode(GridEditMode.InLine).ConfirmDelete("test")/*.DisplayDeleteConfirmation("Test")*/)
+                                               .Pageable()
+                                               .Sortable()
+                                               .Scrollable()
+                                               .HtmlAttributes(new { style = "height:200px;" })
+                                               .DataSource(dataSource => dataSource
+                                                   .Ajax()
+                                                   .PageSize(20)
+                                                   //.Events(events => events.Error("error_handler"))
+                                                   .Model(model => model.Id(p => p.Id))
+                                               .Create(update => update.Action("CreateContributor", "Company").Data("GetModelID"))
+                                               ////.Read(read => read.Action("Read", "Company"))
+                                               .Update(update => update.Action("UpdateContributor", "Company"))
+                                               .Destroy(update => update.Action("DestroyContributor", "Company"))
+                                               )
+                                    )
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-success btn-padding pull-right"><i class="fa fa-save" style="padding-left:4px;"></i>@SharedResources.btnSave</button>
+            <button type="submit" class="btn btn-default btn-padding">@SharedResources.btnCancel</button>
+
+        </div>
+    }
+    <!-- /.box-footer -->
+</div>
+
+<script type="text/javascript">
+
+    function GetModelID() {
+        return {
+            companyId : '@Model.Id'
+        };
+    }
+
+    function filterMainCategories() {
+        return {
+            councilTypeId: $("#CouncilTypes").val()
+        };
+    }
+
+
+    function filterSubCategories() {
+        return {
+            mainCategoryId: $("#MainCategories").val()
+        };
+    }
+
+
+</script>

@@ -1,0 +1,516 @@
+<h3 class="page-title mb-3 d-flex ">
+  <div class="hexagon hexa-m">
+    <span class="icon-font icon-decision "></span>
+  </div>
+
+  <span class="text mr-2">{{ 'decisions.decisionReference' | translate }}</span>
+</h3>
+<form [ngClass]="{ 'dx-rtl': rtlEnabled }" [formGroup]="formDecision" (ngSubmit)="onSubmit($event,formDecision.value)">
+
+  <dx-validation-group #valGroup>
+    <!--About Meeting-->
+    <ng-container *ngIf="meeting">
+      <div class="container-fluid mb-4 mt-3">
+        <div class="shadow-container pb-3">
+          <div class="row pt-4">
+            <div class="col-md-12">
+              <h4 class="sub-section">
+                <span class="font-icon icon-about"></span>{{'decisions.meetingInfo' | translate}}
+                <span class="font-weight-bold reference-number font-7">
+                  [ {{'decisions.meetingNo' | translate}}:
+                  <span>{{ meeting.MeetingIndexNumber }}</span>
+                  ]
+                </span>
+              </h4>
+            </div>
+          </div>
+          <div class="row pt-4 ">
+            <div class="col-md-8">
+
+              <span class="font-weight-bold">{{'decisions.meeting' | translate}}</span>&nbsp;&nbsp;
+              <span>{{ meeting.CouncilType.Description }}</span>
+              <!--<span> {{ meeting.Round.RoundNumber}}</span>-->
+              <span> {{'decisions.forYear' | translate}}  {{ meeting.MeetingDate | date: 'yyyy'}}</span>
+            </div>
+            <div class="col-md-4">
+              <span class="font-weight-bold">{{'decisions.meetingLocation' | translate}}</span>&nbsp;&nbsp;
+              <span>{{ meeting.Location }}</span>
+            </div>
+            <!--<div class="col-md-3">
+              <span class="font-weight-bold">{{'decisions.meetingDate' | translate}}</span>&nbsp;&nbsp;
+              <span>{{ meeting.MeetingDate | date: 'dd/MM/yyyy'}}</span>
+            </div>-->
+          </div>
+
+          <ng-container *ngIf="AgendaItemId != 0">
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="AgendaItemId" [rtlEnabled]="rtlEnabled"></dx-text-box>
+                <span class="font-weight-bold">{{'decisions.AgendaItem' | translate}}</span>&nbsp;&nbsp;
+                <span>{{AgendaItemtxt}} </span>
+              </div>
+            </div>
+            <ng-container *ngIf="AgendaDetailId != 0">
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="AgendaDetailId" [rtlEnabled]="rtlEnabled"></dx-text-box>
+                  <span class="font-weight-bold">{{'decisions.AgendaDetail' | translate}}</span>&nbsp;&nbsp;
+                  <span>{{AgendaDetailtxt}}</span>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+    <!--</ng-container>-->
+    <!--In Case of editing a decision-->
+    <ng-container *ngIf="editMood">
+      <div class="container-fluid mb-4 mt-3">
+        <div class="shadow-container pb-3">
+          <div class="row pt-4">
+            <div class="col-md-12">
+              <h4 class="sub-section">
+                <span class="font-icon icon-about"></span>{{'decisions.meetingInfo' | translate}}
+                <span class="font-weight-bold reference-number font-7">
+                  [ {{'decisions.meetingNo' | translate}}:
+                  <!--<span>{{ decision.ConferenceIndex }}</span>-->
+                  ]
+                </span>
+              </h4>
+            </div>
+          </div>
+          <div class="row pt-4 ">
+            <div class="col-md-8">
+
+              <span class="font-weight-bold">{{'decisions.meeting' | translate}}</span>&nbsp;&nbsp;
+              <span>{{ decision.CouncilType.Description }}</span>
+              <!--<span> {{ meeting.Round.RoundNumber}}</span>-->
+              <span> {{'decisions.ConferenceYear' | translate}}  {{ meeting.MeetingDate | date: 'yyyy'}}</span>
+            </div>
+            <div class="col-md-4">
+              <span class="font-weight-bold">{{'decisions.meetingLocation' | translate}}</span>&nbsp;&nbsp;
+              <!--<span>{{ decision.Country.Name }}</span>-->
+            </div>
+            <!--<div class="col-md-3">
+              <span class="font-weight-bold">{{'decisions.meetingDate' | translate}}</span>&nbsp;&nbsp;
+              <span>{{ meeting.MeetingDate | date: 'dd/MM/yyyy'}}</span>
+            </div>-->
+          </div>
+
+          <!--<ng-container *ngIf="decision.AgendaItemId != 0">
+            <div class="row mt-2">
+              <div class="col-md-12">
+                <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="AgendaItemId" [rtlEnabled]="rtlEnabled"></dx-text-box>
+                <span class="font-weight-bold">{{'decisions.AgendaItem' | translate}}</span>&nbsp;&nbsp;
+                <span>{{decision.AgendaItem.AgendaText}} </span>
+              </div>
+            </div>
+            <ng-container *ngIf="decision.AgendaDetailId != 0">
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="AgendaDetailId" [rtlEnabled]="rtlEnabled"></dx-text-box>
+                  <span class="font-weight-bold">{{'decisions.AgendaDetail' | translate}}</span>&nbsp;&nbsp;
+                  <span>{{decision.AgendaDetail.Description}}</span>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>-->
+        </div>
+      </div>
+    </ng-container>
+
+    <!--Decision-->
+    <div class="container-fluid mb-4">
+      <div class="shadow-container p-3">
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <h4 _ngcontent-lsd-c5="" class="sub-section"><span _ngcontent-lsd-c5="" class="font-icon icon-decision"></span> {{'decisions.decision' | translate}}</h4>
+            <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="Id" [rtlEnabled]="rtlEnabled"></dx-text-box>
+            <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="ConferenceYear" [rtlEnabled]="rtlEnabled"></dx-text-box>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-lg-3 col-md-4 col-5">
+                <div class="dx-field">
+                  <div class="dx-field-label">{{ 'decisions.number' | translate }}<span class="ctrl-validation-astrix">*</span></div>
+                  <div class="dx-field-value">
+                    <dx-number-box [min]="0"
+                                   [showSpinButtons]="true"
+                                   formControlName="DecisionNumber">
+                      <dx-validator>
+                        <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'decisions.number' | translate} }}">
+                        </dxi-validation-rule>
+                      </dx-validator>
+                    </dx-number-box>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-9 col-md-8 col-7">
+                <div class="dx-field">
+                  <div class="dx-field-label">{{ 'MainCategory.Title' | translate }}<span class="ctrl-validation-astrix">*</span></div>
+                  <div class="dx-field-value">
+                    <dx-select-box [dataSource]="mainCatList$ | async"
+                                   displayExpr="Description"
+                                   placeholder="{{'MainCategory.placeholder' | translate}}"
+                                   valueExpr='Id'
+                                   [searchEnabled]="true"
+                                   formControlName="MainCategoryId"
+                                   (onValueChanged)="onMainCatValueChanged($event)">
+                      <dx-validator>
+                        <dxi-validation-rule type="required" message="{{'messages.txtSelectOneMessage' | translate:{'reuiredField':'MainCategory.Title' | translate} }}"></dxi-validation-rule>
+                      </dx-validator>
+                    </dx-select-box>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="dx-field">
+              <div class="dx-field-label">{{ 'SubCategory.Title' | translate }} <span class="ctrl-validation-astrix">*</span></div>
+              <div class="dx-field-value">
+                <dx-select-box [dataSource]="subCatList$ | async"
+                               displayExpr="Description"
+                               placeholder="{{'SubCategory.placeholder' | translate}}"
+                               valueExpr='Id'
+                               [searchEnabled]="true"
+                               formControlName="SubCategoryId">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="{{'messages.txtSelectOneMessage' | translate:{'reuiredField':'SubCategory.Title' | translate} }}"></dxi-validation-rule>
+                  </dx-validator>
+                </dx-select-box>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-4">
+            <div class="dx-field">
+              <div class="dx-field-label">{{ 'decisionTypes.DecisionType' | translate }}<span class="ctrl-validation-astrix">*</span></div>
+              <div class="dx-field-value">
+                <dx-select-box [dataSource]="decisionTypes$ | async"
+                               displayExpr="Name"
+                               placeholder="{{'SubCategory.placeholder' | translate}}"
+                               valueExpr='Id'
+                               [searchEnabled]="true"
+                               formControlName="DecisionTypeId">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="{{'messages.txtSelectOneMessage' | translate:{'reuiredField':'decisionTypes.DecisionType' | translate} }}"></dxi-validation-rule>
+                  </dx-validator>
+                </dx-select-box>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="dx-field-label">{{'decisions.affectedBy' | translate}}</div>
+            <dx-tag-box [items]="companies$ | async"
+                        displayExpr="Name"
+                        valueExpr="Id"
+                        [searchEnabled]="true"
+                        formControlName="SelectedCompaniesIds"
+                        placeholder="{{'decisions.affectedByDesc' | translate}}"
+                        showDropDownButton=true
+                        acceptCustomeValue=true>
+            </dx-tag-box>
+          </div>
+          <div class="col-md-4">
+            <div class="dx-field-label">{{'decisions.brief' | translate}} <span class="ctrl-validation-astrix">*</span></div>
+            <dx-text-area [height]="80"
+                          formControlName="Subject"
+                          placeholder="{{ 'decisions.briefDesc' | translate }}">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'decisions.brief' | translate} }}">
+                </dxi-validation-rule>
+              </dx-validator>
+            </dx-text-area>
+          </div>
+          <div class="col-md-4">
+            <dx-text-box class="hidden-field float-right" style="background-color:transparent; height:0px; width:200px" [rtlEnabled]="rtlEnabled" formControlName="DecisionPath">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'decisions.decisionFilePDF' | translate} }}"></dxi-validation-rule>
+                <dxi-validation-rule type="pattern" pattern="\b[1-9]{1,3}_[0-9]{4}\b" message="{{'messages.txtPattern' | translate:{'reuiredField':'decisions.decisionFilePDF' | translate} }}"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+            <div class="dx-field-label">
+              {{'decisions.decisionFilePDF' | translate}}
+              <span class="ctrl-validation-astrix">*</span>
+
+            </div>
+            <dx-file-uploader [rtlEnabled]="rtlEnabled"
+                              [uploadUrl]="uploadURL"
+                              [uploadHeaders]="headers"
+                              (onUploaded)="onUploadedFile($event)"
+                              [multiple]="false"
+                              [allowedFileExtensions]="['.pdf']"
+                              accept="*"
+                              name="decisionFilePDF"
+                              uploadMode="instantly">
+            </dx-file-uploader>
+            <div class="uploader-positio-absolute uploader-preview ">
+              <span class="color-red small">{{'messages.uploadedDecisionFilePattern' | translate}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="d-flex">
+              <div class="dx-field-label">
+                {{'decisions.decisionTxt' | translate}} <span class="ctrl-validation-astrix">*</span>
+              </div>
+              <dx-text-box class="hidden-field float-right" width="70%" formControlName="RequiredDecisionText" [rtlEnabled]="rtlEnabled">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'decisions.decisionTxt' | translate} }}">
+                  </dxi-validation-rule>
+                </dx-validator>
+              </dx-text-box>
+            </div>
+
+            <div class="dx-field-value rich-text-area">
+              <div formControlName="DecisionText"
+                   [ngxSummernote]="config">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="dx-field-label">{{'decisions.tags' | translate}}</div>
+            <div class="dx-field-value rich-text-area">
+              <dx-text-box formControlName="KeyWords"></dx-text-box>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="dx-field-label"></div>
+            <div class="dx-field-value">
+              <label class="b-contain">
+                <span>{{'decisions.executed' | translate}}</span>
+                <input type="checkbox" data-md-icheck [checked]="isExecutable" (change)="toggleVisibility($event)" />
+                <div class="b-input"></div>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <ng-container *ngIf="isExecutable">
+              <div class="dx-field-label">{{ 'decisions.suggestedDecsionExecutionDate' | translate }}</div>
+              <div class="dx-field-value">
+                <dx-date-box [min]="min"
+                             [useMaskBehavior]="true"
+                             displayFormat="'{{ 'dateCtrl.date' | translate }}':EEEE, d of MMM, yyyy '{{ 'dateCtrl.time' | translate }}'HH:mm"
+                             formControlName="ExecutionDate"
+                             placeholder="{{ 'messages.suggestedDecsionExecutionDate' | translate }}"
+                             type="datetime"
+                             [rtlEnabled]="rtlEnabled">
+                  <dx-validator>
+                    <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'decisions.suggestedDecsionExecutionDate' | translate} }}">
+                    </dxi-validation-rule>
+                  </dx-validator>
+                </dx-date-box>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <ng-container *ngIf="isExecutable">
+          <div formArrayName="DecisionExecutions" class="shadow-container">
+            <div class="row mt-1 mb-1">
+              <div class="col-md-12">
+                <h4 _ngcontent-lsd-c5="" class="sub-section"> <span _ngcontent-lsd-c5="" class="font-icon icon-attendance"></span> {{'decisions.executors' | translate}}</h4>
+              </div>
+            </div>
+            <div *ngFor="let data of formDecision['controls'].DecisionExecutions['controls']; let x=index">
+              <div [formGroupName]="x">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="dx-field-label">{{ 'decisions.singleExecutor' | translate }}</div>
+                    <div class="dx-field-value">
+                      <dx-select-box [dataSource]="departments$ | async"
+                                     displayExpr="Name"
+                                     placeholder="{{'decisions.singleExecutor' | translate}}"
+                                     valueExpr='Id'
+                                     [searchEnabled]="true"
+                                     formControlName="DepartmentId">
+                        <dx-validator>
+                          <dxi-validation-rule type="custom"
+                                               [validationCallback]="checkIfExecutableWithRequired"
+                                               message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'decisions.singleExecutor' | translate} }}">
+                          </dxi-validation-rule>
+                        </dx-validator>
+
+                      </dx-select-box>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="dx-field-label">{{ 'decisions.ActionType' | translate }}</div>
+                    <div class="dx-field-value">
+                      <dx-select-box [dataSource]="actions"
+                                     displayExpr="NameAr"
+                                     placeholder="{{'decisions.ActionType' | translate}}"
+                                     valueExpr='Id'
+                                     [searchEnabled]="true"
+                                     formControlName="ActionType">
+                        <dx-validator>
+                          <dxi-validation-rule type="custom"
+                                               [validationCallback]="checkIfExecutableWithRequired"
+                                               message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'decisions.ActionType' | translate} }}">
+                          </dxi-validation-rule>
+                        </dx-validator>
+                      </dx-select-box>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="delete-link "><a class="delete-link font-30" (click)="onDeleteAction(x)" title="{{'decisions.deleteExecutors'|translate}}"><span class="font-icon icon-delete"></span></a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-block">
+              <button class="btn btn-secondary mt-2" type="button" (click)="addInitExecutor()">{{'decisions.addExecutors' | translate}}</button>
+            </div>
+          </div>
+
+        </ng-container>
+
+      </div>
+    </div>
+
+    <!--Reference-->
+    <div class="container-fluid">
+      <div class="shadow-container p-3">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="sub-section">
+              <span class="font-icon icon-upload-reference-full"></span>{{'decisions.reference' | translate}}
+              <p><span class="font-7 reference-number">{{'decisions.referenceDesc' | translate}}</span></p>
+            </h4>
+          </div>
+        </div>
+        <div formArrayName="ReferenceItems">
+          <div *ngFor="let data of formDecision['controls'].ReferenceItems['controls']; let i=index">
+
+            <div [formGroupName]="i">
+              <div class="row">
+                <div class="col-lg-4 col-md-4">
+                  <dx-text-box placeholder="" [(value)]="data.get('Id').value" [class.d-none]="true"
+                               formControlName="Id" [rtlEnabled]="rtlEnabled">
+                  </dx-text-box>
+
+                  <dx-text-box formControlName="RefereceItemNo" [class.d-none]="true"></dx-text-box>
+                  <div class="dx-field">
+                    <div class="dx-field-label">{{ 'decisions.referenceType' | translate }}</div>
+                    <div class="dx-field-value">
+                      <dx-select-box #referenceTypeCtrl [dataSource]="referenceType$ | async"
+                                     displayExpr="Name"
+                                     placeholder="{{'decisions.referenceTypeCtrl' | translate}}"
+                                     valueExpr="Id"
+                                     [searchEnabled]="true"
+                                     formControlName="ReferenceTypeId">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'decisions.referenceType' | translate} }}">
+                          </dxi-validation-rule>
+                        </dx-validator>
+                      </dx-select-box>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-3">
+                  <ng-container *ngIf="!this.refernceDecisionList.includes(referenceTypeCtrl?.value)">
+                    <div class="dx-field-label">{{'decisions.uploadReference' | translate}}</div>
+                    <dx-text-box placeholder="" class="width-95" [class.d-none]="true" formControlName="Path" [rtlEnabled]="rtlEnabled"></dx-text-box>
+                    <dx-file-uploader [rtlEnabled]="rtlEnabled"
+                                      (onValueChanged)="addReferenceItemParameter($event)"
+                                      [uploadUrl]="uploadWithParameterURL"
+                                      (onUploaded)="onUploadedReferenceItemFile($event)"
+                                      [uploadHeaders]="headers"
+                                      [multiple]="false"
+                                      [allowedFileExtensions]="['.pdf']"
+                                      name="{{data.get('RowIndex').value}}"
+                                      accept="*"
+                                      uploadMode="instantly">
+                    </dx-file-uploader>
+                    
+                  </ng-container>
+                  <ng-container *ngIf="this.refernceDecisionList.includes(referenceTypeCtrl?.value)">
+                    <div class="dx-field-label">{{'decisions.decision' | translate}}</div>
+                    <dx-lookup [dataSource]="decisionsDataSource"
+                               [closeOnOutsideClick]="true"
+                               title="{{'decisions.SearchGrid' | translate}}"
+                               valueExpr="Id"
+                               displayExpr="Subject"
+                               formControlName="ReferenceDecisionId">
+                      <div *dxTemplate="let item of 'item'">
+                        <div class="custom-item">
+                          <div>{{item.ConferenceYear }}-{{item.Subject }}</div>
+                        </div>
+                      </div>
+                      <dx-validator>
+                        <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'decisions.decision' | translate} }}">
+                        </dxi-validation-rule>
+                      </dx-validator>
+                    </dx-lookup>
+                  </ng-container>
+                </div>
+                <div class="col-md-4">
+                  <div class="dx-field">
+                    <div class="dx-field-label">{{ 'decisions.comments' | translate }}</div>
+                    <div class="dx-field-value">
+                      <dx-text-area [height]="80"
+                                    [maxLength]="maxLength"
+                                    formControlName="Description"
+                                    placeholder="{{ 'decisions.comments' | translate }}">
+                      </dx-text-area>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <div class="text-right delete-link "><a class="delete-link font-30" (click)="onDeleteReference(i)"><span class="font-icon icon-delete"></span></a></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="d-block">
+          <button class="btn btn-secondary mt-2" type="button" (click)="addInitReference()">{{'decisions.addReference' | translate}}</button>
+        </div>
+      </div>
+    </div>
+    <!--Submit Buttons-->
+    <div class="d-flex justify-content-center mt-2 mb-4">
+      <dx-validation-summary id="summary"></dx-validation-summary>
+    </div>
+
+
+    <div class="d-flex justify-content-center mt-4 mb-4">
+      <dx-button text="{{'buttons.save' |translate}}"
+                 type="success"
+                 class="btn btn-primary ml-1" [useSubmitBehavior]="true" (click)="onSubmit($event, valGroup)">
+      </dx-button>
+      <!--<button class="btn btn-primary" (click)="onFormSubmit($event, valGroup, content)"><span class="font-icon icon-check-circle"></span> حفظ</button>-->
+      <button class="btn btn-secondary ml-1" [routerLink]="['/home']"><span class="font-icon icon-cancel font-weight-bold"></span> {{'buttons.cancel' |translate}}</button>
+      <button class="btn btn-secondary ml-1" (click)="OnBackStep()"><span class="font-icon icon-cancel font-weight-bold"></span> {{'buttons.selectAnotherAgenda' |translate}}</button>
+    </div>
+
+
+    <!--About Meeting-->
+    <div class="d-none">
+      <dx-text-box class="d-none" formControlName="ConferenceIndex" readOnly="true">172</dx-text-box>
+
+      <dx-text-box class="d-none" formControlName="CouncilType" readOnly="true"></dx-text-box>
+      <dx-text-box class="d-none" formControlName="ConferenceNumber" readOnly="true"> الاول</dx-text-box>
+
+
+      <dx-text-box formControlName="ConferenceLocation" class="d-none" readOnly="true"></dx-text-box>
+
+      <dx-text-box formControlName="ConferenceDate" class="d-none" readOnly="true"></dx-text-box>
+
+    </div>
+
+  </dx-validation-group>
+</form>

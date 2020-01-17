@@ -1,0 +1,115 @@
+﻿@using DocumentsExplorer.DTO;
+@using DocumentsExplorer.Website.Helper;
+@using DocumentsExplorerResources = DocumentsExplorer.Website.Resources.DocumentsExplorerResource;
+@using SharedResources = DocumentsExplorer.Website.Resources.SharedResource;
+@model DecisionExecutionDTO
+<div class="box box-success">
+    <div class="box-header with-border">
+        <h3 class="box-title">@DocumentsExplorerResources.txtExecuteDecisonTitle</h3>
+    </div>
+   
+
+    @using (Html.BeginForm("ExecuteDecision", "Decision", FormMethod.Post,
+                                      new { enctype = "multipart/form-data", @id = "ExecuteDecisonFormId" }))
+    {
+    <div class="box-body">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(c => c.Id)
+        @Html.HiddenFor(c => c.DepartmentId)
+        @Html.HiddenFor(c => c.DecisionId)
+        @Html.HiddenFor(c => c.CreateDate)
+        @Html.HiddenFor(c => c.CreatedBy)
+        <div class="row">
+
+            <div class="attachment-block clearfix">
+                <div class="attachment-pushed col-md-4">
+                    <h4 class="attachment-heading"> @DocumentsExplorerResources.txtDecisionSubject</h4>
+
+                    <label class="attachment-text">
+                        @Html.Raw(Model.DecisionSubject)
+                    </label>
+                </div>
+                <div class="attachment-pushed col-md-4">
+                    <h4 class="attachment-heading"> @DocumentsExplorerResources.txtDecisionNO</h4>
+
+                    <label class="attachment-text">
+                        @Html.Raw(Model.DecisionDecisionNumber)
+                    </label>
+                </div>
+                <div class="attachment-pushed col-md-4">
+                    <h4 class="attachment-heading"> @DocumentsExplorerResources.txtDepartment</h4>
+
+                    <label class="attachment-text">
+                        @Html.Raw(Model.DepartmentName)
+                    </label>
+                </div>
+            </div>
+            @*<div class="form-group">
+                <div class="col-md-2"><label class="lbl-in-row"></label> </div>
+                <div class="col-md-2">
+                    @Html.Raw(Model.DecisionSubject)
+                </div>
+            </div>*@
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div><label class="control-label"> @DocumentsExplorerResources.txtDecisionStatus</label> </div>
+                    <div class="k-rtl">
+                        @*@Html.DropDownListFor(model => model.DecisionStatus, EnumHelper<EnumDecisionStatus>.GetSelectList(), new { @class = "form-control"@*, data_live_search = "true"})*@
+                        @(Html.Kendo().DropDownListFor(model => model.DecisionStatus)
+                                                                             .DataTextField("Text")
+                                                                               .DataValueField("Value")
+                                                                            .Name("DecisionStatus")
+                                                                            .SelectedIndex((int)Model.DecisionStatus)
+                                                                            .BindTo(EnumHelper<EnumDecisionStatus>.GetSelectList())
+                                                                            .HtmlAttributes(new { style = "width: 100%", @class = "form-control" }))
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div><label class="control-label"> @DocumentsExplorerResources.txtExecutionNotes</label> </div>
+                    <div>
+                        @Html.TextAreaFor(c => c.ExecutionNotes, new { @class = "form-control", @row = 2 })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-success btn-padding pull-right"><i class="fa fa-save" style="padding-left:4px;"></i>@SharedResources.btnSave</button>
+            <button type="submit" class="btn btn-default btn-padding">@SharedResources.btnCancel</button>
+
+        </div>
+    }
+    <!-- /.box-footer -->
+</div>
+
+<script type="text/javascript">
+
+
+    function filterMainCategories() {
+        return {
+            councilTypeId: $("#CouncilTypes").val()
+        };
+    }
+
+
+    function filterSubCategories() {
+        return {
+            mainCategoryId: $("#MainCategories").val()
+        };
+    }
+
+
+</script>

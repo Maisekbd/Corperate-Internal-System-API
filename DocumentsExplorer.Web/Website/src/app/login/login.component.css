@@ -1,0 +1,171 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.centered {
+    
+    top: 12.5%;
+    position:fixed;
+    /*left: 50%;*/
+    /* bring your own prefixes 
+    transform: translate(-50%, -50%);*/
+}
+
+.white-bg {
+    background-color: #fff;
+    box-shadow: 0px 0px 25px 5px rgba(67,67,67,0.3);
+    width:80%;
+   
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-control-container {
+    background-image: url(../../assets/images/leaf-bg.png);
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-color: #fff;
+}
+
+.login-control-div {
+    padding: 50px;
+    text-align: center;
+}
+
+.logo-div {
+    background-color: #fff2b9;
+    border-right: 1px solid #edd466;
+    height: 100%;
+    padding: 12% 20px;
+    text-align:center;
+}
+
+h4 {
+    color: #512c1d;
+}
+
+
+.logo-div img {
+    max-width: 200px !important;
+    margin: auto;
+}
+
+.input-group .input-group-addon {
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+.btn-full-width {
+    width: 100%;
+}
+
+.btn-success:hover, .btn-success:active:hover, .open > .dropdown-toggle.btn-success.focus, .open > .dropdown-toggle.btn-success:focus, .open > .dropdown-toggle.btn-success:hover {
+    color: #fff;
+    background: #512c1d;
+    border: 0px solid #a8ddc0;
+}
+
+.btn-success {
+    border: 0px;
+    border-radius: 40px;
+    color: #fff;
+    background: rgba(185,225,175,1);
+    background: -moz-linear-gradient(left, rgba(81,44,29,0.8) 0%, rgba(81,44,29,1) 49%, rgba(81,44,29,0.7) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(81,44,29,0.8)), color-stop(49%, rgba(81,44,29,1)), color-stop(100%, rgba(81,44,29,0.7)));
+    background: -webkit-linear-gradient(left, rgba(81,44,29,0.8) 0%, rgba(81,44,29,1) 49%, rgba(81,44,29,0.7) 100%);
+    background: -o-linear-gradient(left, rgba(81,44,29,0.8) 0%, rgba(81,44,29,1) 49%, rgba(81,44,29,0.7) 100%);
+    background: -ms-linear-gradient(left, rgba(81,44,29,0.8) 0%, rgba(81,44,29,1) 49%, rgba(81,44,29,0.7) 100%);
+    background: linear-gradient(to right, rgba(81,44,29,0.8) 0%, rgba(81,44,29,1) 49%, rgba(81,44,29,0.7) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#583121', endColorstr='#512c1d', GradientType=1 );
+    transition: background-color 0.5s ease;
+}
+
+.input-group .form-control:not(:first-child):not(:last-child),
+.input-group-addon:not(:first-child):not(:last-child), .input-group-btn:not(:first-child):not(:last-child) {
+    border-bottom-left-radius: 40px;
+    border-top-left-radius: 40px;
+    border-right: 0px;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #3e1b00;
+    border-color: #edd466;
+    border-radius: 40px;
+}
+.btn-primary:hover {
+    background-color: #3e1b00;
+    border-color: #edd466;
+}
+.btn-primary {
+    background-color: #582701;
+    border-color: #582701;
+    transition:background-color 0.5s ease-in, border-color 0.5s ease-in-out;
+}
+
+@media(min-width:1700px) {
+    .login-control-container, .logo-div {
+        height: 600px;
+    }
+
+    .login-control-container {
+        padding-top: 120px;
+    }
+}
+
+@media(min-width:768px) and (max-width:1699px) {
+    .login-control-container, .logo-div {
+        height: 400px;
+    }
+
+    /*.login-control-container {
+        margin-right: 15px;
+    }*/
+
+    .logo-div {
+        display: flex;
+        padding: 0px;
+        align-items:center;
+    }
+}
+@media(max-width:1099px) and (min-width:993px){
+    .centered{
+        top:27%;
+        position:fixed;
+    }
+}
+@media(max-width:992px) {
+    .centered {
+        top: 10.5%;
+        position: fixed;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+
+        .row > div:nth-of-type(1) {
+            order: 2;
+        }
+
+        .row > div:nth-of-type(2) {
+            order: 1;
+        }
+
+    .logo-div {
+        width: 100%
+    }
+
+    .login-control-div {
+        padding: 25px;
+    }
+
+    /*.login-control-container {
+        margin: 0px 15px;
+    }*/
+}

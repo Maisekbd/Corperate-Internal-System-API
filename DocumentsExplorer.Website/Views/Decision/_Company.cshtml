@@ -1,0 +1,250 @@
+﻿@using DocumentsExplorer.DTO;
+@using DocumentsExplorerResources = DocumentsExplorer.Website.Resources.DocumentsExplorerResource;
+@using SharedResources = DocumentsExplorer.Website.Resources.SharedResource;
+@model DecisionDTO
+
+<script>
+    function customPlaceholder(draggedItem) {
+        return draggedItem
+                .clone()
+                .addClass("custom-placeholder")
+                .removeClass("k-ghost");
+    }
+
+    function GetModelId() {
+        return
+        {
+            modeId: '@Model.Id'
+          };
+    }
+</script>
+<div id="divCompany" @*style="display:none;"*@>
+    <div class="col-md-6" style="height: 400px !important;">
+            <div class="form-group">
+                <div><label class="control-label"> @DocumentsExplorerResources.txtCompany</label> </div>
+                <div>
+                    @(Html.Kendo().ListBox()
+                                                                       .Name("optional")
+                                                                       .DataTextField("Name")
+                                                                       .DataValueField("Id")
+                                                                       //.DataSource(source => source
+                                                                       //    .Read(read => { read.Action("ReadCompanies", "Decision").Data("GetModelId"); }).ServerFiltering(true)
+                                                                       //)
+                                                                       .TemplateId("company-item-template")
+                                                                       .Draggable(draggable => draggable.Placeholder("customPlaceholder"))
+                                                                       .DropSources("selected")
+
+                                                                       .ConnectWith("selected")
+                                                                       .Toolbar(toolbar =>
+                                                                       {
+                                                                           toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Left);
+                                                                           toolbar.Tools(tools => tools
+                                                                               .MoveUp()
+                                                                               .MoveDown()
+                                                                               .TransferTo()
+                                                                               .TransferFrom()
+                                                                               .TransferAllTo()
+                                                                               .TransferAllFrom()
+                                                                               .Remove());
+                                                                       })
+                                                                       .BindTo(ViewBag.AllCompanies)
+                    )
+
+                    @(Html.Kendo().ListBox()
+                                                                        .Name("selected")
+                                                                       .Toolbar(toolbar =>
+                                                        {
+                                                            toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Left);
+
+                                                        })
+                                                                        .DataTextField("Name")
+                                                                        .DataValueField("Id")
+                                                                        .TemplateId("company-item-template")
+                                                                        .Draggable(draggable => draggable.Placeholder("customPlaceholder"))
+                                                                        .DropSources("optional")
+                                                                        .ConnectWith("optional")
+                                                                        .BindTo(Model.Companies)
+                    )
+                </div>
+            </div>
+    </div>
+</div>
+            <script id="company-item-template" type="text/x-kendo-template">
+                <span class="k-state-default" style="background-image: url('@Url.Content("~/Content/Flags/")#= data.CountryId #.png')"></span>
+                <span class="k-state-default"><h3>#= data.Name #</h3><p>#= data.ActivitySectorsName #</p></span>
+            </script>
+
+
+
+            <style>
+                #divCompany .k-listbox
+                {
+                    width: 326px;
+                    height: 310px;
+                }
+
+                #divCompany .k-listbox:first-child
+                {
+                    width: 360px;
+                    margin-right: 1px;
+                }
+
+                .k-ghost
+                {
+                    display: none !important;
+                }
+
+                .custom-placeholder
+                {
+                    opacity: 0.4;
+                }
+
+                #divCompany .k-item
+                {
+                    line-height: 1em;
+                    margin-bottom: 10px;
+                    margin-bottom: 10px;
+                }
+
+                /* Material Theme padding adjustment*/
+
+                .k-material #divCompany .k-item,
+                .k-material #divCompany .k-item.k-state-hover,
+                .k-materialblack #divCompany .k-item,
+                .k-materialblack #divCompany .k-item.k-state-hover
+                {
+                    padding-left: 5px;
+                    border-left: 0;
+                }
+
+                .k-item > span
+                {
+                    -webkit-box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+                    display: table-cell;
+                    vertical-align: top;
+                    margin: 20px 10px 10px 5px;
+                }
+
+                #divCompany .k-item > span:first-child,
+                .k-item.k-drag-clue > span:first-child
+                {
+                    -moz-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+                    -webkit-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+                    box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+                    margin: 10px;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    background-size: 100%;
+                    background-repeat: no-repeat;
+                }
+
+                #divCompany h3,
+                .k-item.k-drag-clue h3
+                {
+                    font-size: 1.2em;
+                    font-weight: normal;
+                    margin: 0 0 1px 0;
+                    padding: 0;
+                }
+
+                #divCompany p
+                {
+                    margin: 0;
+                    padding: 0;
+                    font-size: .8em;
+                }
+
+                .k-i-arrow-60-right:before,
+                .k-i-arrow-double-60-right:before
+                {
+                    margin-left: -2px;
+                }
+
+                .k-i-arrow-60-right:before, .k-i-arrow-60-left:before,
+                .k-i-arrow-double-60-right:before, .k-i-arrow-double-60-left:before
+                {
+                    -moz-transform: scaleX(-1);
+                    -o-transform: scaleX(-1);
+                    -webkit-transform: scaleX(-1);
+                    transform: scaleX(-1);
+                    filter: FlipH;
+                    -ms-filter: "FlipH";
+                }
+            </style>
+
+
+            @*<div class="col-md-4">
+                <div class="form-group">
+                    <div><label class="control-label"> @DocumentsExplorerResources.txtCompany</label> </div>
+                    <div>
+                        @(Html.Kendo().DropDownListFor(c => c.CompanyId)
+                                                                     .Name("CompanyId")
+                                                                     .DataTextField("Name")
+                                                                     .DataValueField("Id")
+                                                                      .OptionLabel(DocumentsExplorerResources.txtCompanySelectValue)
+                                                                     .DataSource(source =>
+                                                                     {
+                                                                         source.Read(read => { read.Action("ReadCompanies", "Decision"); })
+                                                                          .ServerFiltering(true);
+
+                                                                     })
+                                                                     .Events(evt => evt.Change("OnCompanyChange"))
+                                                                     .HtmlAttributes(new { style = "width: 100%", @class = "form-control" })
+                                                                    .AutoBind(true)
+                        )
+                    </div>
+                </div>
+            </div>
+            <div id="divCompanyDescription" class="col-md-6" style="display:none;">
+                <div class="box box-solid">
+                    <div class="box-body">
+                        <h4 id="Company_Title" style="background-color:#f7f7f7; font-size: 18px; text-align: center; padding: 7px 10px; margin-top: 0; color: #255625;"></h4>
+                        <div class="media">
+                            <div class="media-left">
+                                <img class="img-circle img-sm" id="CountryFlag" src="" style="width:50px; height:50px;" alt="User Image">
+                            </div>
+                            <div class="media-body">
+                                <div class="box-comment" style="margin-right:15px;">
+
+                                    <div class="comment-text">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>@DocumentsExplorerResources.txtCountry:</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <span id="spanCountryName"></span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>@DocumentsExplorerResources.txtDateOfIncorporation:</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span id="spanDateOfIncorporation"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>@DocumentsExplorerResources.txtCompanyActivityDescription:</label>
+                                            </div>
+                                            <div class="col-md-8" style="text-align: justify">
+                                                <span id="spanActivityDescription"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>@DocumentsExplorerResources.txtSectors:</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <span id="spanSectors" style="text-align: justify"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>*@

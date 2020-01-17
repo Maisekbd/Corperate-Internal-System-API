@@ -1,0 +1,52 @@
+
+<h1 class="text-center">{{'meetingroom.hallsTitle' | translate}}</h1>
+<div class="container-fluid">
+  <div class="row" [ngClass]="{ 'dx-rtl': rtlEnabled }">
+    <div class="col-md-12 d-block-edit-mood">
+      <dx-data-grid [dataSource]="hallDS"
+                    [remoteOperations]="true"
+                    [rtlEnabled]="rtlEnabled"
+                    [showColumnLines]="false"
+                    [showRowLines]="true"
+                    [showBorders]="false"
+                    [rowAlternationEnabled]="false">
+        <dxo-editing mode="form"
+                     [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" [useIcons]="true">
+
+        </dxo-editing>
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
+        <dxo-filter-row [visible]="true"></dxo-filter-row>
+        <!--<dxo-editing mode="row" [allowDeleting]="true" [useIcons]="true"></dxo-editing>-->
+        <dxo-search-panel [visible]="true" placeholder="{{'meetingroom.searchTxt' | translate}}"></dxo-search-panel>
+        <dxo-pager [visible]="true"
+                   [showPageSizeSelector]="true"
+                   [allowedPageSizes]="[5, 10, 20]"
+                   [showInfo]="true">
+        </dxo-pager>
+        <dxi-column dataField="Name" [caption]="formatMessage('Name','')" dataType="string">
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="Location" [caption]="formatMessage('Location','')" dataType="number" cellTemplate="cellTemplate" editCellTemplate="locationEditor">
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <p>{{locationDS[cell.value].NameAr}}</p>
+        </div>
+
+        <div *dxTemplate="let cellInfo of 'locationEditor'">
+          <dx-radio-group [items]="locationDS"
+                          [(value)]="cellInfo.value"
+                          displayExpr="NameAr"
+                          valueExpr="Id"
+                          layout="horizontal"
+                          (onValueChanged)="onValueChanged($event, cellInfo)">
+          </dx-radio-group>
+
+
+        </div>
+      </dx-data-grid>
+    </div>
+  </div>
+
+</div>
+

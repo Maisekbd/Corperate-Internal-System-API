@@ -1,0 +1,363 @@
+<h3 class="page-title mb-3 d-flex align-items-end">
+  <span class="font-icon icon-decision"></span>
+  <span class="text mr-3">{{'decisions.title' | translate}}</span>
+  <ng-container *ngIf="show">
+    [&nbsp;<span class="d-inline-block mr-1 ml-1 small">{{'decisions.number' | translate }}: </span> <span class="font-weight-bold">{{decision.DecisionNumber}}</span>&nbsp;]
+    <ng-container *ngIf="decision.IsExecutable">
+      <span class="badge ml-2 small light-gray-bg">{{'decisions.execute' | translate}}</span>
+      <div class="badge badge-success small ml-3 pl-2 pr-2 pb-2">
+        <span class="small">{{'decisions.status' | translate}}:&nbsp; </span>
+        <span class="small">{{ ("EnumDecisionStatus." + decision.DecisionStatus) | translate}}</span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!decision.IsExecutable">
+      <span class="badge ml-2 small light-gray-bg"> {{'decisions.notExecute' | translate}}</span>
+    </ng-container>
+  </ng-container>
+</h3>
+
+<ng-container *ngIf="show">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-7 white-bg">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="sub-section">
+              <span class="font-icon icon-decision"></span>{{'decisions.brief' | translate}}
+            </h4>
+          </div>
+          <div class="col-lg-6">
+            <a class="d-flex lnk-icon justify-content-end hang" (click)="previewDecision(decision.DecisionPath)">
+              <div class="btn btn-outline-primary d-flex">
+                <div class="font-icon icon-download"></div>{{'decisions.previewDecisionFilePDF' | translate}}
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-3 col-12 text-lg-right field-lable-read-only">
+            <span class="font-weight-bold">{{'decisions.brief' | translate}}:</span>
+          </div>
+          <div class="col-lg-9 col-12 "> {{decision.Subject}}</div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-3 col-12 text-lg-right field-lable-read-only">
+            <span class="font-weight-bold">{{'decisions.mainType' | translate}}:</span>
+          </div>
+          <div class="col-lg-9 col-12">
+            {{decision.MainCategory.Description}}
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-3 col-12 text-lg-right field-lable-read-only">
+            <span class="font-weight-bold">{{'decisions.subType' | translate}}:</span>
+          </div>
+          <div class="col-lg-9 col-12">
+            {{decision.SubCategory.Description}}
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-3 col-12 text-lg-right field-lable-read-only">
+            <span class="font-weight-bold">{{'decisions.type' | translate}}:</span>
+          </div>
+          <div class="col-lg-9 col-12">
+            {{decision.DecisionType}} <ng-container *ngIf="decision.DecisionType==null "> {{'messages.doesntHave' | translate}}</ng-container>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-3 col-12 text-lg-right field-lable-read-only">
+            <span class="font-weight-bold">نص القرار:</span>
+          </div>
+          <div class="col-lg-9 col-12">
+            <div [innerHTML]="decision.DecisionText"></div>
+            <!--{{decision.DecisionText}}-->
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-lg-3 col-12 text-lg-right field-lable-read-only">
+            <span class="font-weight-bold">{{'decisions.affectedBy' | translate}}</span>
+          </div>
+          <div class="col-lg-9 col-12">
+            <ul class="ul-with15-start-padding">
+              <li *ngFor="let company of decision.Companies">
+                <p>{{company.Name}}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="shadow-container pb-3">
+          <div class="container-fluid">
+            <div class="row pt-2">
+              <div class="col-md-12">
+                <h4 class="sub-section">
+                  <span class="font-icon icon-about"></span>{{'decisions.meetingInfo' | translate}}
+                  <span class="font-weight-bold reference-number font-7">
+                    [{{'decisions.meetingNo' | translate}}:
+                    <span>{{decision.ConferenceIndex}}</span>
+                    ]
+                  </span>
+                </h4>
+              </div>
+            </div>
+            <div class="row pt-4 ">
+              <div class="col-md-7">
+                <span class="font-weight-bold">{{'decisions.meeting'|translate}}</span>&nbsp;&nbsp;
+                <span>{{ decision.CouncilType.Description }}</span>
+                <span> <!--{{ meeting.Round.RoundNumber}}--></span>
+                <span> {{'decisions.forYear'|translate}} {{ decision.ConferenceYear }}</span>
+              </div>
+              <div class="col-md-5">
+                <span class="font-weight-bold">
+
+                  البلد
+                </span>
+                &nbsp;&nbsp;
+                <ng-container *ngIf="decision.Country != null"><span>{{decision.Country.Name}}</span></ng-container>
+              </div>
+
+            </div>
+
+            <ng-container *ngIf="decision.AgendaItem != null">
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <span class="font-weight-bold">{{'decisions.AgendaItem'|translate}}</span>&nbsp;&nbsp;
+                  <span>{{decision.AgendaItem.AgendaNumber}}.{{decision.AgendaItem.AgendaText}} </span>
+                  <ng-container *ngIf="decision.AgendaItem.AttachementName !== '' ">
+                    <div class="d-block uploader-preview mt-2 ml-1">
+                      <a class="color-green " title="{{ 'gridAction.View' | translate }}" (click)="viewAgendaAttachmentClick(decision.AgendaItem.AttachementName)">
+                        <span class="font-icon pop icon-preview float-left"></span><span>{{'buttons.previewFile' | translate}}</span>
+                      </a>
+                    </div>
+                  </ng-container>
+
+                  
+                </div>
+              </div>
+              <ng-container *ngIf="decision.AgendaDetail != null">
+                <div class="row mt-2">
+                  <div class="col-md-12">
+                    <span class="font-weight-bold">{{'decisions.AgendaDetail'|translate}}</span>&nbsp;&nbsp;
+                    <span>{{decision.AgendaItem.AgendaNumber}}.{{decision.AgendaDetail.TreeNumber}}.{{decision.AgendaDetail.Description}}</span>
+                    <ng-container *ngIf="decision.AgendaDetail.AttachementName !== '' ">
+                      <div class="d-block uploader-preview mt-2 ml-1">
+                        <a class="color-green " title="{{ 'gridAction.View' | translate }}" (click)="viewAgendaAttachmentClick(decision.AgendaDetail.AttachementName)">
+                          <span class="font-icon pop icon-preview float-left"></span><span>{{'buttons.previewFile' | translate}}</span>
+                        </a>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class=" shadow-container pb-3 mt-4">
+          <div class="container-fluid">
+            <div class="row pt-2">
+              <div class="col-md-12">
+                <h4 class="sub-section">
+                  <span class="font-icon icon-upload-reference-full"></span>{{'decisions.reference'|translate}}
+                </h4>
+              </div>
+            </div>
+            <ng-container *ngIf="decision.ReferenceItems.length == 0">
+              <div class="m-auto w-100 text-center "><h5 class="color-red">{{'messages.doesntHave' | translate}} </h5></div>
+            </ng-container>
+            <ng-container *ngIf="decision.ReferenceItems.length != 0">
+              <ng-container *ngFor="let ref of decision.ReferenceItems; let last = last">
+                <div class="row pt-2 pb-2">
+                  <div class="col-6">
+                    <span class="font-weight-bold">النوع: </span>
+                    <span>{{ref.ReferenceType.Name}}</span>
+                  </div>
+                  <div class="col-6">
+                    <a *ngIf="!this.refernceDecisionList.includes(ref.ReferenceTypeId)" class="font-weight-bold lnk-icon" (click)="viewRefITem(ref.Path)"><span class="font-icon icon-preview"></span>{{'buttons.preview' | translate}} </a>
+                    <a *ngIf="this.refernceDecisionList.includes(ref.ReferenceTypeId)" class="font-weight-bold lnk-icon" (click)="viewRefITem(ref.RefDecisionPath)"><span class="font-icon icon-preview"></span>{{'buttons.preview' | translate}} </a>
+                    <!--{{ref.RefDecisionPath}}-->
+                  </div>
+                  <ng-container *ngIf="ref.Description != null">
+                    <div class="col-12 mt-2">
+                      <span class="font-weight-bold">
+                        {{
+'decisions.comments' | translate
+                        }}:
+                      </span>
+                      <span>{{ref.Description}}</span>
+                    </div>
+                  </ng-container>
+                </div>
+                <ng-container *ngIf="!last">
+                  <hr />
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class=" shadow-container pb-3 mt-4">
+          <div class="container-fluid">
+            <div class="row pt-2">
+              <div class="col-md-12">
+                <h4 class="sub-section">
+                  <span class="font-icon icon-tags"></span>{{'decisions.tags' | translate}}
+                </h4>
+              </div>
+            </div>
+            <div class="row pt-2 pb-2 tags">
+              <ng-container *ngIf="decision.KeyWords == null">
+                <div class="w-100 text-center">
+                  <h5 class="color-red">{{'messages.doesntHave' | translate}}</h5>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="decision.KeyWords != null">
+                <div class="col-12">
+                  <ng-container *ngFor="let keyword of decision.KeyWordList; let last = last">
+                    <span class="badge badge-secondary">{{keyword}}</span>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="skew-top-gray z-1"></div>
+  <div class="light-gray-bg pb-5 execution">
+    <div class="container-fluid">
+      <div class="title-gray-area">
+        <span class="font-icon icon-executor-fill"></span>
+        <h4>{{'decisions.executors' | translate}}</h4>
+      </div>
+      <!--<div class="shadow-container pb-3 z-10 position-relative  ">-->
+        <ng-container *ngIf="!decision.IsExecutable">
+          <div class="w-100 text-center">
+            <h5 class="color-red">{{'messages.notExecuted' |translate}}</h5>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="decision.IsExecutable">
+          <!--<div class="row pt-2 pb-3">
+            <div class="col-md-12">
+              <h4 class="sub-section">
+                <span class="font-icon icon-executor-fill"></span>{{'decisions.executors' | translate}}
+              </h4>
+            </div>
+          </div>-->
+          <ng-container *ngFor="let executionData of decision.DecisionExecutions; let last=last">
+            <ng-container *ngIf="!executionData.NeedAction">
+              <div class="shadow-container z-10 position-relative mb-2 ">
+                <div class="row mt-1">
+                  <div class="col-lg-4 col-md-6 col-12 ">
+                    <span class="font-weight-bold">{{'decisions.executor' | translate}}: </span>
+                    <span>{{executionData.DepartmentName}}</span>
+                  </div>
+                  <div class="col-lg-3 col-md-6  col-12">
+                    <span class="font-weight-bold">{{'decisions.ActionType' | translate}}: </span>
+                    <span>{{ ("ActionTypeEnum." + executionData.ActionType) | translate}}</span>
+                  </div>
+                  <!--<div class="col-lg-5 col-md-6 col-12">
+                    <span class="font-weight-bold">{{'decisions.comments' | translate}}: </span>
+                    <ng-container *ngIf="executionData.ExecutionNotes == null || executionData.ExecutionNotes == ''">
+                      <span>{{'messages.doesntHave' | translate}}</span>
+                    </ng-container>
+                    <span>{{executionData.ExecutionNotes}}</span>
+                  </div>-->
+                </div>
+                  <!--<hr style="border-style:double" />-->
+                <div class="row execution-state">
+                  <div class="col-lg-4 col-md-6  col-12">
+                    <span class="font-weight-bold">{{'decisions.status' | translate}}: </span>
+                    <span>{{ ("EnumDecisionStatus." + executionData.DecisionStatus) | translate}}</span>
+                  </div>
+                  <div class="col-lg-3 col-md-6  col-12">
+                    <ng-container *ngIf="executionData.ExecutionDate!= null">
+
+                      <span class="font-weight-bold">{{'decisions.ExecuteDate' | translate}}: </span>
+                      <span>{{ executionData.ExecutionDate | date: 'dd/MM/yyyy'}}</span>
+
+                    </ng-container>
+                    <ng-container *ngIf="executionData.ExecutionDate == null">
+
+                      <img src="assets/images/information.png" class="img-30" />
+                      <h6 class="info ml-1">{{'messages.noExecutionDate' | translate}}</h6>
+
+                    </ng-container>
+                  </div>
+                  <div col-lg-5 col-md-6 col-12>
+                    <span class="font-weight-bold">{{'decisions.comments' | translate}}: </span>
+                    <ng-container *ngIf="executionData.ExecutionNotes == null || executionData.ExecutionNotes == ''">
+                      <span>{{'messages.doesntHave' | translate}}</span>
+                    </ng-container>
+                    <span>{{executionData.ExecutionNotes}}</span>
+                  </div>
+                </div>
+                  <ng-container *ngIf="executionData.AttachementName && executionData.AttachementName != '' ">
+                    <!--<hr style="border-style:double" />-->
+                    <div class="row">
+                      <div class="col-12 mt-2 pb-1">
+                        <div class="d-flex">
+                          <a class="lnk-icon" (click)="viewRefITem(executionData.AttachementName)">
+                            <span class="font-icon icon-clip"></span><span>اسم الملف</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                
+              </div>
+            </ng-container>
+            <ng-container *ngIf="executionData.NeedAction">
+              <div class="shadow-container pb-3 z-10 position-relative">
+                <div class="row align-items-end">
+                  <div class="col-lg-4 col-12 ">
+                    <div class="dx-field-label">{{'decisions.comments' | translate}}</div>
+                    <div class="dx-field-value">
+                      <dx-text-area [height]="80"
+                                    [(value)]="executionComment"
+                                    placeholder="{{ 'meetings.agendaItemText' | translate }}">
+                        <dx-validator>
+                          <dxi-validation-rule type="required" message="{{'messages.txtRequiredMessage' | translate:{'reuiredField':'decisions.comments' | translate} }}">
+                          </dxi-validation-rule>
+                        </dx-validator>
+                      </dx-text-area>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-12 ">
+                    <div class="dx-field-label">{{'decisions.uploadReference' | translate}}</div>
+                    <dx-text-box [class.d-none]="true"></dx-text-box>
+                    <div class="dx-field-value">
+                      <dx-file-uploader #executionEvidence [rtlEnabled]="rtlEnabled"
+                                        (onValueChanged)="addUploaderParameter($event)"
+                                        [uploadUrl]="uploadURL"
+                                        [uploadHeaders]="headers"
+                                        (onUploaded)="onUploadedFile($event)"
+                                        [multiple]="false"
+                                        accept="*"
+                                        uploadMode="instantly">
+                      </dx-file-uploader>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-12 ">
+                    <a class="d-flex lnk-icon hang mb-15" (click)="ExecuteDecision(executionData.Id)">
+                      <div class="btn btn-outline-primary d-flex">
+                        <div class="font-icon icon-download"></div>{{'decisions.ExecuteDecision' | translate}}
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+              <!--<ng-container *ngIf="!last">
+                <hr />
+              </ng-container>-->
+            </ng-container>
+          </ng-container>
+      <!--</div>-->
+    </div>
+  </div>
+  <!--</ng-container>-->
+</ng-container>

@@ -1,0 +1,102 @@
+﻿@using DocumentsExplorer.DTO;
+@using DocumentsExplorerResource = DocumentsExplorer.Website.Resources.DocumentsExplorerResource;
+@using SharedResource = DocumentsExplorer.Website.Resources.SharedResource;
+<script type="text/javascript">
+    function onDeleteRow(e) {
+        var grid = $('#Decisiongrid').data("kendoGrid");
+        var row = $(e).closest("tr")[0];
+        $('#modal-Confirmation-Delete').modal('show');
+
+        $("#ConfirmDelete").click(function () {
+            var data = grid.dataItem(row);
+            grid.dataSource.remove(data);
+            grid.dataSource.sync();
+            $('#modal-Confirmation-Delete').modal('hide');
+        });
+    }
+
+
+</script>
+
+
+<script src="https://kendo.cdn.telerik.com/2018.3.1017/js/pako_deflate.min.js"></script>
+<input id="button0PDF" type="submit" class="k-button download" data-format="pdf" data-title="Title2" value="Export to pdf" />
+@(Html.Kendo().Grid<DecisionDTO>()
+                                              .Name("Decisiongrid")
+                                              .Columns(columns =>
+                                              {
+                                                  columns.Bound(c => c.Id).Visible(false);
+                                                  columns.Bound(c => c.CouncilTypeDescription).Title(DocumentsExplorerResource.txtCouncilTypeDescription);
+                                                  columns.Bound(c => c.DecisionNumber).Title(DocumentsExplorerResource.txtDecisionNO);
+                                                  columns.Bound(c => c.Subject).Title(DocumentsExplorerResource.txtDecisionSubject);
+                                                  columns.Bound(c => c.MainCategoryDescription).Title(DocumentsExplorerResource.txtMainCategory);
+                                                  columns.Bound(c => c.SubCategoryDescription).Title(DocumentsExplorerResource.txtSubCategory);
+                                                  columns.Bound(c => c.ConferenceNumber).Title(DocumentsExplorerResource.txtConferenceNumber);
+                                                  columns.Bound(c => c.ConferenceYear).Title(DocumentsExplorerResource.txtConferenceYear);
+                                                  columns.Bound(c => c.ConferenceLocation).Title(DocumentsExplorerResource.txtConferenceLocation);
+                                                  columns.Bound(c => c.CountryName).Title(DocumentsExplorerResource.txtCountry);
+                                                  columns.Template(@<text></text>).Width("6%")
+                                                        .Title(SharedResource.txtDownload)
+                                                        .ClientTemplate("<a href='" +
+                                                        Url.Action("Download", "Decision", new { fileName = "#=DecisionPath#" }) +
+                                                        "'><i class='fa fa-download'></i></a> ");
+                                                    if (User.IsInRole("DepartmentCoordinator"))
+                                                    { 
+                                                    columns.Template(@<text></text>).Width("6%")
+                                                       .Title(DocumentsExplorerResource.txtExecuteDecisonTitle)
+                                                       .ClientTemplate("<a href='" +
+                                                       Url.Action("ExecuteDecision", "Decision", new { decisionId = "#=Id#" }) +
+                                                       "'><i class='fa fa-cogs'></i></a> ");
+                                                    }
+                                                    columns.Template(@<text></text>).Width("6%")
+                                                    .Title(SharedResource.txtPreview)
+                                                    .ClientTemplate("<a target = '_blank' href='" +
+                                                    Url.Action("Preview", "Decision", new { fileName = "#=DecisionPath#", }) +
+                                                    "'><i class='fa fa-search'></i></a> ");
+                                                  columns.Template(@<text></text>).Width("6%")
+                                                     .Title(SharedResource.txtEdit)
+                                                     .ClientTemplate("<a href='" +
+                                                      Url.Action("Create", "Decision", new { id = "#=Id#", }) +
+                                                      "'><i class='fa fa-edit'></i></a> ");
+                                                                    @*columns.Template(@<text></text>).Width("6%")
+                                                                        .Title(SharedResource.txtEdit)
+                                                                        .ClientTemplate("<a href='' data-toggle='modal' data-target='\\#modal-Confirmation-Delete'><i class='fa fa-times'></i></a> ");*@
+                                                   columns.Command(c => c.Custom("Remove").Template("<i style=' cursor: pointer; color:red;' class='fa fa-times' onclick='onDeleteRow($(this))'></i> "));
+                                               })
+                                               .HtmlAttributes(new { style = "height: 800px;" })
+                                                .ToolBar(tools =>
+                                                {
+                                                    tools.Excel().Text(SharedResource.ExportToExcel);
+                                                    tools.Pdf().Text(SharedResource.ExportToPDF);
+                                                })
+                                                   .Excel(excel => excel
+                                                       .FileName("Decisions.xlsx")
+                                                        .AllPages(true)
+                                                       .Filterable(true)
+                                                       .ProxyURL(Url.Action("Excel_Export_Save", "Shared"))
+                                               )
+                                                .Pdf(pdf => pdf
+                                                         .AllPages()
+                                                         .AvoidLinks()
+                                                        .FileName("Kendo UI Grid Export.pdf")
+                                                         .ProxyURL(Url.Action("Pdf_Export_Save", "Shared"))
+                                                     )
+                                                                       .Scrollable()
+                                           .Sortable()
+                                           //.Mobile()
+                                           .Pageable(pageable => pageable
+                                               .Refresh(true)
+                                               .PageSizes(true)
+                                               .ButtonCount(5))
+                                           .DataSource(dataSource => dataSource
+                                               .Ajax()
+                                               .Model(c => c.Id(d => d.Id))
+                                               .Read(read => read.Action("ReadDecisions", "Decision").Data("additionalInfo"))
+                                                .Destroy(delete => delete.Action("Delete", "Decision"))
+                                               .PageSize(20)))
+                                                                                                                                                                                                                                                                                                             )
+
+
+@Html.Partial("Modal/DeleteConfirmationModal")
+
+

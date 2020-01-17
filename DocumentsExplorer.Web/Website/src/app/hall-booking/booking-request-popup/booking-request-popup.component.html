@@ -1,0 +1,143 @@
+<dx-popup id="hall_booking-popup"
+          [maxHeight]="400"
+          closeOnOutsideClick="true"
+          [showTitle]="true"
+          [rtlEnabled]="rtlEnabled"
+          title="{{'hall-booking-request.popUptitle' | translate}}"
+          [(visible)]="isPopupVisible">
+
+  <div *dxTemplate="let data of 'content'" class="popup-content">
+    <div>
+      <dx-validation-group #popupValidationGroup>
+        <div class="row">
+          <div class="col-6">
+            <div class="dx-field">
+              <div class="dx-field-label">{{'hall-booking-request.title' | translate}}</div>
+              <div class="dx-field-value">
+                <dx-text-box [(value)]="currentRequest.Title" name="title" class="p-0" [rtlEnabled]="rtlEnabled">
+                  <dx-validator>
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                  </dx-validator>
+                </dx-text-box>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="dx-field">
+              <div class="dx-field-label">{{'hall-booking-request.meetingType' | translate}}</div>
+              <div class="dx-field-value">
+                <dx-select-box [dataSource]="meetingType$ | async"
+                               [searchEnabled]="true"
+                               displayExpr="Name"
+                               [(value)]="currentRequest.MeetingTypeId"
+                               valueExpr="Id">
+                  <dx-validator>
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                  </dx-validator>
+                </dx-select-box>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <div class="dx-field">
+              <div class="dx-field-label">{{'hall-booking-request.fromDate' | translate}}</div>
+              <div class="dx-field-value">
+                <dx-date-box [(value)]="currentRequest.StartDate"
+                             [min]="minDateValue"
+                             type="datetime"
+                             [disabledDates]="disabledDates"
+                             (onValueChanged)="setMaxDate($event)">
+                </dx-date-box>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-6">
+            <div class="dx-field">
+              <div class="dx-field-label">{{'hall-booking-request.toDate' | translate}}</div>
+              <div class="dx-field-value">
+                <dx-date-box [(value)]="currentRequest.EndDate"
+                             [min]="minEndDateValue"
+                             [max]="maxDateValue"
+                             type="datetime"
+                             [disabledDates]="disabledDates"
+                             (onValueChanged)="onEndDateChanged($event)">
+                  <dx-validator>
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                  </dx-validator>
+                </dx-date-box>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <div class="dx-field">
+              <div class="dx-field-label">{{'hall-booking-request.location' | translate}}</div>
+              <div class="dx-field-value">
+                <dx-radio-group [items]="locationDS"
+                                [value]="currentRequest.Location"
+                                displayExpr="NameAr"
+                                valueExpr="Id"
+                                layout="horizontal"
+                                (onValueChanged)="onLocationChanged($event)">
+                </dx-radio-group>
+              </div>
+            </div>
+          </div>
+
+          <ng-container *ngIf="!showDubaiHall">
+            <div class="col-6">
+              <div class="dx-field">
+                <div class="dx-field-label">{{'hall-booking-request.hall' | translate}}</div>
+                <div class="dx-field-value">
+                  <dx-select-box [dataSource]="halls$ | async"
+                                 [searchEnabled]="true"
+                                 [(value)]="currentRequest.HallId"
+                                 displayExpr="Name"
+                                 valueExpr="Id"></dx-select-box>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="showDubaiHall">
+            <div class="col-3">
+              <div class="dx-field">
+                <div class="dx-field-label">{{'hall-booking-request.dubaiHall' | translate}}</div>
+
+                <div class="dx-field-value">
+                  <dx-select-box [dataSource]="dubaiHalls$ | async"
+                                 [searchEnabled]="true"
+                                 [(value)]="currentRequest.HallId"
+                                 displayExpr="Name"
+                                 valueExpr="Id"></dx-select-box>
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="dx-field">
+                <div class="dx-field-label">{{'hall-booking-request.sudanHall' | translate}}</div>
+
+                <div class="dx-field-value">
+                  <dx-select-box [dataSource]="sudanHalls$ | async"
+                                 [searchEnabled]="true"
+                                 [(value)]="currentRequest.SudanHallId"
+                                 displayExpr="Name"
+                                 valueExpr="Id"></dx-select-box>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+      </dx-validation-group>
+    </div>
+    <div class="mt-3">
+      <button class="btn btn-primary w-30 mb-2" (click)="OnSaveRequet()">{{'hall-booking-request.buttons.save' | translate}}</button>
+    </div>
+  </div>
+</dx-popup>

@@ -1,0 +1,88 @@
+<!--<div class="dx-fieldset mt-3">
+  <div class="row">
+    <div class="dx-fieldset-header d-flex align-items-start">
+      <h5></h5>
+      <h6></h6>
+    </div>
+  </div>-->
+<div [formGroup]="_parentForm">
+  <ng-container *ngIf="employeesList">
+    <div class="row choose-employees">
+      <div class="col-md-4 col-lg-3">
+        <div class="d-flex">
+          <h6 class="text-orange"><span class="font-icon icon-employees"></span> &nbsp; {{ 'meetings.innerEmployees' | translate}}</h6>
+          <!--<dx-text-box class="hidden-field" formControlName="txtHidden">
+            <dx-validator [validationRules]="validationRules.txtHidden"> </dx-validator>
+          </dx-text-box>-->
+
+        </div>
+
+        <dx-list #list
+                 [dataSource]="employeesList"
+                 [height]="400"
+                 [searchEnabled]="true"
+                 keyExpr="Id"
+                 searchExpr="Name"
+                 selectionMode="multiple"
+                 searchMode="contains"
+                 [(selectedItems)]="selectedItems"
+                 pageLoadMode="scrollBottom"                 
+                 (onSelectionChanged)="onSelectionChanged($event)">
+          <dxo-search-editor-options placeholder="بحث عن موظف">
+          </dxo-search-editor-options>
+          <div *dxTemplate="let data of 'item'">
+            <div><span class="font-icon icon-employee"></span><span class="employee-name">{{ data.Name }}</span></div>
+            <div>{{ data.Department.Name }}</div>
+          </div>
+        </dx-list>
+
+      </div>
+
+      <div class="col-lg-9 col-md-8 ">
+        <div class="row">
+          <div class="col-12">
+            <h6 class="caption">{{'meetings.innerEmployeesAttendence' | translate}} :</h6>
+          </div>
+
+        </div>
+        <div class="selected-data list-container">
+
+          <ng-container *ngIf="selectedItems?.length === 0">
+            <h5 class="text-center text-orange mt-5">{{'messages.choosenEmployees' | translate}}</h5>
+          </ng-container>
+
+          <!--<div *ngFor="let data of empAttendence; let i = index" class="mt-3">-->
+          <div formArrayName="SelectedEmployees">
+            <div *ngFor="let data of parentForm['controls'].SelectedEmployees['controls']; let i=index">
+              <div [formGroupName]="i">
+                <div class="row">
+                  <div class=" col-md-5">
+                    <dx-text-box formControlName="Id" [value]="data.get('Id').value" [class.d-none]="true" [rtlEnabled]="rtlEnabled"> </dx-text-box>
+                    <dx-text-box formControlName="Name" [value]="data.get('Name').value" [class.d-none]="true" [rtlEnabled]="rtlEnabled"> </dx-text-box>
+                    <span class="font-icon icon-employee"></span> {{data.get('Name').value}}
+                  </div>
+                  <dx-text-box formControlName="DepartmentId" [value]="data.get('DepartmentId').value" [class.d-none]="true" [rtlEnabled]="rtlEnabled"> </dx-text-box>
+                  <dx-text-box formControlName="DepartmentName" [value]="data.get('DepartmentName').value" [class.d-none]="true" [rtlEnabled]="rtlEnabled"> </dx-text-box>
+                  <div class="col-md-5"><span class="font-icon icon-dept"></span> {{data.get('DepartmentName').value}}</div>
+                  <div class="col-md-2 text-right delete-link"><a class="delete-link" (click)="onRemoveEmp(i)"><span class="font-icon icon-delete"></span></a></div>
+                </div>
+
+
+              </div>
+              <!--</div>
+        </div>-->
+
+              <hr />
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+  </ng-container>
+</div>
+  <!--</div>-->

@@ -1,0 +1,138 @@
+<h3 class="page-title mb-3"> <span class="font-icon icon-general"></span><span class="text">{{ 'decisions.decisionsView' | translate }}</span></h3>
+<div class="skew-top-gray z-1"></div>
+<div class="light-gray-bg pb-100 search-content">
+  <div class="container-fluid pt-3 pb-3">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-11">
+        <h4>{{'meetings.SearchGrid' | translate}}</h4>
+      </div>
+    </div>
+    <div class="row" [ngClass]="{ 'dx-rtl': rtlEnabled }">
+      <div class="col-lg-2 d-none d-lg-block"> </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="dx-field">
+          <div class="dx-field-label">{{ 'meetings.council' | translate }}</div>
+          <div class="dx-field-value">
+            <dx-select-box [dataSource]="councils$ | async"
+                           valueExpr='Id'
+                           displayExpr="Description"
+                           placeholder="{{ 'CouncilType.Title' | translate }}"
+                           [searchEnabled]="true"
+                           [(value)]="councilTypeID"
+                           (onSelectionChanged)=" onCouncilIdChanged($event)"></dx-select-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-5">
+        <div class="dx-field">
+          <div class="dx-field-label">{{ 'decisions.forYear' | translate }}</div>
+          <div class="dx-field-value">
+            <dx-number-box [(value)]="year"
+                           [showSpinButtons]="false"
+                           placeholder="year"
+                           (onValueChanged)="onYearChanged($event)"></dx-number-box>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <div class="dx-field">
+          <div class="dx-field-label">{{ 'meetings.meetingTitle' | translate }}</div>
+          <div class="dx-field-value">
+            <dx-select-box [dataSource]="meetings$ | async"
+                           valueExpr='Id'
+                           displayExpr="MeetingNumber"
+                           placeholder="رقم الاجتماع"
+                           (onSelectionChanged)="onSelectionChanged($event)"
+                           [searchEnabled]="true"></dx-select-box>
+          </div>
+
+        </div>
+      </div><div class="col-lg-2"></div>
+    </div>
+  </div>  
+</div>
+<ng-container *ngIf="show">
+  <div class="container-fluid "  >
+    <div class="shadow-container negative-mt-100 pos-rel z-10 mb-5">
+      <div class="row">
+        <div class="col-12 text-right">
+          <!--<a (click)>Print</a>-->
+          <!--<button [useExistingCss]="true"  [printStyle]="{body :{'direction':'rtl';} }" printSectionId="print-section" ngxPrint  >PRINT</button>-->
+          <button (click)="onPrintDoc()" class="btn btn-outline-primary">
+            <i class="dx-icon dx-icon-print"></i>
+            {{'buttons.print' | translate}}
+          </button>
+          <!--<dx-button icon="print"
+                     type="success"
+                     class="btn btn-outline-primary"
+                     text="{{'buttons.print' | translate}}"
+                     (onClick)="onPrintDoc()">
+          </dx-button>-->
+          <!--[routerLink]="['../../print/document']-->
+        </div>
+      </div>
+      <div id="print-section">
+        <div class="row">
+          <div class="col-lg-3 col-md-1"></div>
+          <div class="col-lg-6 col-md-10">
+            <div class="text-center content-border mt-3">
+              <h5>{{'decisions.meeting' | translate}} {{meeting.CouncilType.Description}} {{meeting.MeetingNumber}} <br />{{'decisions.forYear' | translate}} {{meeting.MeetingDate | date: 'yyyy'}}</h5>
+              <h6>{{'meetings.country' | translate}} {{meeting.Location}}</h6>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-1"></div>
+        </div>
+        <ng-container *ngIf="showDecision">
+          <ng-container *ngIf="decisions.length == 0">
+            <div class="d-flex w-100 justify-content-center align-items-center mt-3 mb-3">
+              <img src="assets/images/information.png" class="img-30" />
+              <h5 class="color-red">{{'messages.doesntHaveDecisions' | translate}} </h5>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="decisions.length >= 1">
+            <div class="table-responsive mt-3">
+              <table class="table table-hover">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">{{'decisions.decisionTxt' |translate}}</th>
+                    <th scope="col">{{'decisions.execution' |translate}}</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let decision of decisions">
+                  <tr>
+                    <td width="50">
+                      <div>
+                        <span class="font-weight-bold">{{'decisions.number' | translate}}</span> {{decision.DecisionNumber}} &nbsp; &nbsp;
+                        <span class="font-weight-bold" *ngFor="let dep of decision.Departments; let last = last">{{dep.Name}} <ng-container *ngIf="!last">,</ng-container></span>
+                      </div>
+                    </td>
+                    <td width="50">
+                      <div>
+                        <ng-container *ngIf="decision.IsExecutable">
+                          <span class="badge ml-2 small light-gray-bg">{{'decisions.execute' | translate}}</span>:
+                          <span class="small">{{ ("EnumDecisionStatus." + decision.DecisionStatus) | translate}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="!decision.IsExecutable">
+                          <span class="badge ml-2 small light-gray-bg"> {{'decisions.notExecute' | translate}}</span>
+                        </ng-container>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="50">
+                      <div [innerHTML]="decision.DecisionText"></div>
+                    </td>
+                    <td width="50">
+                      <div *ngFor="let execution of decision.DecisionExecutions; let i=index">({{i+1}}) {{execution.ExecutionNotes}}</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>

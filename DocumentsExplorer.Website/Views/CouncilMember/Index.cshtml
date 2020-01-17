@@ -1,0 +1,129 @@
+﻿@using Kendo.Mvc.UI;
+@using DocumentsExplorer.DTO;
+@using DocumentsExplorerResource = DocumentsExplorer.Website.Resources.DocumentsExplorerResource;
+@using SharedResource = DocumentsExplorer.Website.Resources.SharedResource;
+@{
+        ViewBag.Title = DocumentsExplorerResource.txtViewAllCouncilMemebers;
+}
+<style>
+    .customer-photo
+    {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+
+    .customer-name
+    {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+</style>
+<div class="row ">
+    <div class="col-lg-12">
+        <div class="k-rtl">
+            @(Html.Kendo().Grid<CouncilMemberDTO>()
+                   .Name("CouncilMembergrid")
+                   .Columns(columns =>
+                   {
+                   columns.Bound(c => c.Id).Visible(false);
+
+                   columns.Bound(c => c.Name).ClientTemplate(
+                @"<div class='customer-photo' 
+                    style='background-image: url(" + @Url.Content("~/AvatarPhotos/#:data.PhotoPath#") + ");'></div><div class='customer-name'>#: Name #</div>")
+              .Width(240).Title(DocumentsExplorerResource.txtFullName);
+                   columns.Bound(c => c.Country.Name).Title(DocumentsExplorerResource.txtCountry);
+                   //columns.Bound(c => c.CouncilType.Description).Title(DocumentsExplorerResource.txtCouncilTypeDescription);
+                   columns.Bound(c => c.JoiningDate).Title(DocumentsExplorerResource.txtJoiningDate).ClientTemplate("#= kendo.toString(JoiningDate, \"dd/MM/yyyy\") #");
+                   columns.Bound(c => c.FinishDate).Title(DocumentsExplorerResource.txtFinishDate).ClientTemplate("#if (FinishDate == null) {# #=''# #} else {# #=kendo.toString(FinishDate, \"dd/MM/yyyy\")# #}#");
+                   //"# if(FinishDate==='null') { 'ss' } else { kendo.toString(FinishDate, \"dd/MM/yyyy\") }#"
+
+                   columns.Template(@<text></text>).Width("6%")
+                           .Title(SharedResource.txtEdit)
+                           .ClientTemplate("<a href='" +
+                            Url.Action("Create", "CouncilMember", new { id = "#=Id#", }) +
+                            "'><i class='fa fa-edit'></i></a> ");
+                       columns.Command(c => c.Custom("Remove").Template("<i style='cursor:pointer; color:red;' class='fa fa-times' onclick='onDeleteRow($(this))'></i>"));
+                   })
+                       .HtmlAttributes(new { style = "height: 800px;" })
+                       .Scrollable()
+                       .Sortable()
+                       .Pageable(pageable => pageable
+                           .Refresh(true)
+                           .PageSizes(true)
+                           .ButtonCount(5))
+                       .DataSource(dataSource => dataSource
+                           .Ajax()
+                           .Model(c => c.Id(d => d.Id))
+                           .Read(read => read.Action("ReadCouncilMembers", "CouncilMember"))
+                            .Destroy(delete => delete.Action("Delete", "CouncilMember"))
+                           .PageSize(20)
+                                                            )
+            )
+
+        </div>
+    </div>
+</div>
+@Html.Partial("Modal/DeleteConfirmationModal")
+<script type="text/javascript">
+
+    function onDeleteRow(e) {
+        var grid = $('#CouncilMembergrid').data("kendoGrid");
+        var row = $(e).closest("tr")[0];
+        $('#modal-Confirmation-Delete').modal('show');
+
+        $("#ConfirmDelete").click(function () {
+            var data = grid.dataItem(row);
+            grid.dataSource.remove(data);
+            grid.dataSource.sync();
+            $('#modal-Confirmation-Delete').modal('hide');
+        });
+    }
+    function additionalInfo() {
+        var councilTypeId = 0
+        if ($("#CouncilTypes").data("kendoDropDownList").value() != "")
+            councilTypeId = $("#CouncilTypes").data("kendoDropDownList").value();
+
+        var mainCategoryId = 0
+        if ($("#MainCategories").data("kendoDropDownList").value() != "")
+            mainCategoryId = $("#MainCategories").data("kendoDropDownList").value();
+        return {
+            councilTypeId: councilTypeId,
+            mainCategoryId: mainCategoryId,
+            txtSerach: $("#txtSearch").val(),
+            decisionNO: $("#txtDecisionNO").val()
+        }
+    }
+
+    function onCouncilTypesChange() {
+        RefreshGrid()
+    }
+
+    function onMainCategoriesChange() {
+        RefreshGrid()
+    }
+    function onchangetxtSearch() {
+        RefreshGrid()
+    }
+
+
+    function RefreshGrid() {
+        $('#Decisiongrid').data("kendoGrid").dataSource.read();
+        $('#Decisiongrid').data("kendoGrid").refresh();
+    }
+
+    function filterMainCategories() {
+        return {
+            councilTypeId: $("#CouncilTypes").val()
+        };
+    }
+</script>

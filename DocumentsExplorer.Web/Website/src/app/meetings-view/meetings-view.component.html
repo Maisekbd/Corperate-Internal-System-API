@@ -1,0 +1,84 @@
+
+<h3 class="page-title mb-3 d-flex">
+  <div class="hexagon hexa-m" [ngClass]="{'d-none': !forAddingDecision}">
+    <span class=" icon-general "></span>
+  </div>
+  <span class="font-icon icon-general" [ngClass]="{'d-none': forAddingDecision}"></span>
+  <span class="text" [ngClass]="{'mr-2' : forAddingDecision}">{{ 'meetings.ViewMeetings' | translate }}</span>
+</h3>
+
+
+<div class="main-bg mb-3">
+  <div class="container-fluid">
+    <div class="shadow-container mt-4">
+      <div class="row" [ngClass]="{ 'dx-rtl': rtlEnabled }">
+        <div class="col-md-12 resposive-grid">
+          <dx-data-grid [dataSource]="meetingsDS"
+                        [remoteOperations]="true"
+                        [rtlEnabled]="rtlEnabled"
+                        [hoverStateEnabled]="true"
+                        [columnHidingEnabled]="true"
+                        [showColumnLines]="false"
+                        [showRowLines]="false"
+                        [showBorders]="false"
+                        [rowAlternationEnabled]="false">
+            <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+            <dxo-sorting mode="multiple"></dxo-sorting>
+            <dxo-export [enabled]="true" fileName="Operations" [allowExportSelectedData]="false" placement="bottom" ngbTooltip=""
+                        tooltipClass="my-custom-class" class="text-green"></dxo-export>
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-editing mode="row" [allowDeleting]="AuthService.IsAuthorized(EditableMode)" [useIcons]="true"></dxo-editing>
+            <dxo-search-panel [visible]="false" placeholder=""></dxo-search-panel>
+            <dxo-grouping [contextMenuEnabled]="true" expandMode="rowClick"></dxo-grouping>
+            <dxo-group-panel [visible]="false" emptyPanelText="Use the context menu of header columns to group data"></dxo-group-panel>
+            <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20]" [showInfo]="true" [showNavigationButtons]="true">
+            </dxo-pager>
+            <dxi-column dataField="MeetingIndexNumber" [width]="160" cellTemplate="cellTemplate" [caption]="formatMessage('MeetingIndexNumber','')"
+                        [allowFiltering]="true" [allowHeaderFiltering]="false"></dxi-column>
+            <dxi-column dataField="CouncilTypeId" [calculateCellValue]="ShowCouncilDescription" [calculateFilterExpression]="CouncilFilterExpression"
+                        [caption]="formatMessage('CouncilType','')" [hidingPriority]="0" [allowFiltering]="false" [allowHeaderFiltering]="true">
+              <dxo-header-filter [dataSource]="CouncilFilterGridDS"></dxo-header-filter>
+            </dxi-column>
+            <!--[calculateCellValue]="ShowRoundDescription"-->
+            <dxi-column dataField="RoundId" [caption]="formatMessage('Round','')" [hidingPriority]="0"
+                        [allowFiltering]="false" [allowHeaderFiltering]="true">
+              <dxo-header-filter [dataSource]="RoundFilterGridDS"></dxo-header-filter>
+            </dxi-column>
+            <dxi-column dataField="MeetingNumber" [caption]="formatMessage('MeetingNumber','')" dataType="string" [allowFiltering]="true" [allowHeaderFiltering]="false" [sortIndex]="1" sortOrder="asc"></dxi-column>
+
+            <dxi-column dataField="MeetingDate" [caption]="formatMessage('MeetingDate','')" dataType="date" [format]="{ type: 'dd/MMMM/yyyy' }"
+                        [allowFiltering]="true" [allowHeaderFiltering]="false" [sortIndex]="0" sortOrder="desc"></dxi-column>
+            <dxi-column dataField="MeetingTime" [caption]="formatMessage('MeetingTime','')" dataType="date" [format]="{ type: 'hh:mm a' }"
+                        [allowFiltering]="false" [allowHeaderFiltering]="false"></dxi-column>
+            <dxi-column dataField="Location" [width]="140" [caption]="formatMessage('Location','')"></dxi-column>
+
+            <ng-container *ngIf="AuthService.IsAuthorized(DecisionEditableMode)">
+              <dxi-column type="buttons" [width]="120">
+
+                <dxi-button text="{{ 'decisions.add' | translate}}"
+                            hint="{{'buttons.select' | translate}}"
+                            [onClick]="addDecision">
+                </dxi-button>
+              </dxi-column>
+            </ng-container>
+            <ng-container *ngIf="AuthService.IsAuthorized(EditableMode)">
+              <dxi-column [caption]="formatMessage('Edit','')" type="buttons" [width]="60">
+                <dxi-button hint="{{ 'gridAction.Edit' | translate }}" icon="font-icon icon-edit pulse" [onClick]="editClick"></dxi-button>
+              </dxi-column>
+              <!--</ng-container>
+    <ng-container *ngIf="AuthService.IsAuthorized(EditableMode)">-->
+              <dxi-column [caption]="formatMessage('Delete','')" type="buttons" [visible]="!stepperId" [width]="60">
+                <dxi-button name="delete" hint="{{ 'gridAction.Delete' | translate }}" placement="bottom" icon="font-icon icon-delete delete-link"></dxi-button>
+              </dxi-column>
+            </ng-container>
+            <div *dxTemplate="let data of 'cellTemplate'">
+              <a (click)="viewMeeting(data)" class="lnk-icon"><span class="font-icon icon-view float-left"></span><span>   {{data.value}}</span> </a>
+            </div>
+          </dx-data-grid>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

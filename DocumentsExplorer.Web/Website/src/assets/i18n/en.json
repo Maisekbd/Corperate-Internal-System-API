@@ -1,0 +1,273 @@
+{
+  "demo": {
+    "title": "Translation demo",
+    "text": "This is a simple demonstration app for ngx-translate",
+    "greeting": "Hello {{name}}"
+  },
+  "header": {
+    "appTitle": "Decisions",
+    "greeting": "Hello {{name}}",
+    "department": "{{dept}}",
+    "signOut": "sign out",
+    "admin": "Administration",
+    "menu": {
+      "main": "Home",
+      "decisions": "Decisions",
+      "meetings": "Meetings",
+      "showAll": "Display all",
+      "addDecision": "Add decisions",
+      "addMeeting": "Add meetings",
+      "reports": "Reports",
+      "decisionStatus": "Meeting's decision status",
+      "sendMeetingRequest": "Send Meeting Request",
+      "hallBooking": "Room booking"
+    }
+  },
+  "footer": {
+    "copyRight": "All Rights Reserved © 2019 AAAID"
+  },
+
+  "login": {
+    "firstLevelHeader": "Login",
+    "seconLevelHeader": "Hello",
+    "UserMail": "EMail",
+    "Password": "Password",
+    "InvaildLogin": "Invaild Email or Password"
+  },
+  "CouncilType": {
+    "Title": "Council"
+  },
+  "MainCategory": {
+    "Title": "Main Category",
+    "placeholder": "Choose the main category for the decision"
+  },
+  "SubCategory": {
+    "Title": "Sub Category",
+    "placeholder": "Choose the sub category for the decision"
+  },
+  "messages": {
+    "meetingDateTime": "Please, choose the time and the date for your meeting",
+    "suggestedDecsionExecutionDate": "Please, choose suggested decsion execution date",
+    "selectCouncilMember": "Please, select a council inorder to choose from his members",
+    "choosenEmployees": "Please, choose an employee from left list",
+    "AddOutsideEmployee": "Please, click on 'Add Employee' button to add one or more",
+    "txtRequiredMessage": "Please Insert {{reuiredField}}",
+    "txtPattern": "Please add {{reuiredField}} with exact pattern DecisionNO_ForYear e.g. 12_2015",
+    "txtSelectOneMessage": "please select {{reuiredField}}",
+    "txtSelectWithMinMessage": "please select {{count}} at least for {{reuiredField}}",
+    "txtMoreThanMessage": "please insert more than {{minValue}} in {{fieldName}}",
+    "txtEmailNotVaild": "Email is invaild",
+    "txtDublicate": "{{field}} Number is Dublicated",
+    "noExternalEmployee": "No Attendance from Companies",
+    "noEmployee": "No Attendance from AAAID",
+    "doesntHave": "No Content available",
+    "notExecuted": "This decision isn't for execution",
+    "meetingConfirmAdding": "Do you want to save meeting data?",
+    "decisionConfirmAdding": "Do you want to save meeting data",
+    "noExecutionDate": "The resposible hasn't finished execution yet",
+    "uploadedDecisionFilePattern": "Please, name your file as '15_2019', 15 is decision Number and 2019 is decision year",
+    "doesntHaveDecisions": "This meeting doesn't have any Decisions"
+  },
+  "dateCtrl": {
+    "date": "Date",
+    "time": "Time"
+  },
+  "buttons": {
+    "save": "Save",
+    "yes": "Yes",
+    "no": "No",
+    "print": "Print",
+    "cancel": "Cancel",
+    "select": "Select",
+    "selectAnotherAgenda": "Select another Agenda Item",
+    "selectAnotherMeeting": "Select another Meeting",
+    "addDecision": "Add Decision",
+    "preview": "Preview",
+    "next": "Next",
+    "previous": "Back",
+    "previewFile": "Preview file",
+    "merge": "Merge all documents",
+    "ViewMeetingAgenda": "View Meeting Agenda"
+  },
+  "decisions": {
+    "title": "Decision",
+    "number": "Its Number",
+    "notExecute": "Not Executed",
+    "execute": "Has Execution",
+    "add": "Add Decision",
+    "decisionsView": "Decisions View",
+    "SearchGrid": "Search in Grid",
+    "agendaItem": "Meeting agenda",
+    "reference": "Reference",
+    "decisionReference": "References and Decision",
+    "agendaItemDesc": "Please, select an Item to add decision for it",
+    "referenceDesc": "Please, select reference type, In case the type is 'Decision', please select the refered decision",
+    "referenceTypeCtrl": "Choose reference type",
+    "referenceType": "Type",
+    "uploadReference": "Upload document",
+    "comments": "Comments",
+    "decision": "Decision",
+    "addReference": "Add reference",
+    "briefDesc": "Brief of decision Text",
+    "brief": "Brief",
+    "affectedBy": "Who affected by it",
+    "affectedByDesc": "Choose the people who have affected by this decision",
+    "decisionFilePDF": "Upload Decision file",
+    "decisionTxt": "Text of decision",
+    "tags": "Tags",
+    "execution": "Execute Decision",
+    "executed": "Is it executable?",
+    "executors": "Resposible of executions",
+    "executor": "Executor",
+    "singleExecutor": "Executor",
+    "actions": "Actions",
+    "addExecutors": "Add executors",
+    "deleteExecutors": "Delete executors",
+    "meetingInfo": "Meeting Info",
+    "meetingNo": "Meeting No",
+    "meeting": "Meeting",
+    "forYear": "For Year",
+    "ConferenceYear ": "For Year",
+    "meetingLocation": "Location",
+    "meetingDate": "Date",
+    "AgendaItem": "Agenda Item",
+    "AgendaDetail": "Agenda Detail",
+    "ActionType": "Action Type",
+    "suggestedDecsionExecutionDate": "suggested Decsion Execution Date",
+    "mainType": "Main Category",
+    "subType": "Sub  Category",
+    "type": "Decision  Category",
+    "ExecuteDecision": "Execute Decision",
+    "ExecuteDate": "Execute Date",
+    "status": "Status"
+  },
+  "decisionTypes": {
+    "DecisionType": "Decision Type",
+    "placeholder": "Decision Type"
+  },
+  "meetings": {
+    "title": "The Meeting",
+    "jobDesc": "Jop",
+    "sendEmail": "Send Email",
+    "meetingNo": "Serial number",
+    "meetingInfo": "Meeting Info",
+    "meetingTitle": "Meeting",
+    "date": "Date",
+    "add": "Add Meeting",
+    "aboutMeeting": "About Meeting",
+    "location": "Location",
+    "council": "Council",
+    "chooseCouncil": "Choose Council",
+    "aboutAttendence": "Attendence",
+    "councilMembers": "Council Members",
+    "innerEmployeesTitle": "IDDD Employees",
+    "innerEmployees": "Employees",
+    "innerEmployeesAttendence": "Chosen Employees to Attend",
+    "outsideMembers": "Employees from Companies",
+    "outsideMemberName": "Employee Name",
+    "outsideMemberEmail": "Email",
+    "outsideMemberCompany": "His Company",
+    "outsideMemberJobDescription": "JobDescription",
+    "outsideMemberNameCtrl": "the name of the employee",
+    "outsideMemberCompanyCtrl": "the company he works with",
+    "AddOutsideEmp": "Add Employee",
+    "agenda": "Agenda meeting",
+    "ViewMeetings": "View Meetings",
+    "addAgendaItem": "Add Item to agenda",
+    "agendaNumber": "Agenda Number",
+    "agendaItem": "The item",
+    "agendaItemText": "The agenda item",
+    "addDetails": "Add Details",
+    "Details": "Action",
+    "detailsResponsiblity": "Assigned to",
+    "numberDetails": "Actions:",
+    "treeNumber": "Number",
+    "department": "Department",
+    "SearchGrid": "Search Meetings",
+    "country": "Country"
+  },
+
+  "gridAction": {
+    "View": "View",
+    "Download": "Download",
+    "Edit": "Edit",
+    "Delete": "Delete"
+  },
+
+  "dashboard": {
+    "latestDecisions": "Latest Decisions",
+    "notifications": "Notifications",
+    "meetings": "Meetings",
+    "viewAll": "View all",
+    "decisionNum": "Number",
+    "for": "For",
+    "year": "On year",
+    "dept": "Department",
+    "action": "Actions",
+    "percent": "accomplished",
+    "executeDecision": "Execution",
+    "agenda": "Agenda",
+    "country": "Country",
+    "date": "Date"
+  },
+  "DecisionStatusEnum": {
+    "0": "Not started",
+    "1": "Under execution",
+    "2": "Finished"
+  },
+  "ActionTypeEnum": {
+    "1": "Advice",
+    "2": "Execute",
+    "3": "Save",
+    "4": "Inform",
+    "5": "Review",
+    "6": "Need Contact"
+  },
+  "EnumDecisionStatus": {
+    "0": "Not Strated",
+    "1": "Under Execution",
+    "2": "Executed"
+  },
+  "LocationEnum": {
+    "0": "Dubai",
+    "1": "Sudan"
+  },
+  "meetingroom": {
+    "booking": "Meetingroom Booking",
+    "3days": "3 Days",
+    "workWeek": "Work Weeks",
+    "oneWorkWeek": "1 Work Week",
+    "month": "Month",
+    "availableRoom": "Available room at that time",
+    "location": "Location",
+    "hallsTitle": "Halls",
+    "searchTxt": "hall"
+  },
+  "meetingType": {
+    "title": "Meeting Type",
+    "searchTxt": "Meeting Type"
+  },
+  "hall-booking-request": {
+    "popUptitle": "Hall Booking Information",
+    "title": "Title",
+    "meetingType": "Meeting Type",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "location": "Location",
+    "hall": "Hall",
+    "dubaiHall": "Hall-Dubai",
+    "sudanHall": "Hall-Sudan",
+    "buttons": {
+      "save": "Save",
+      "cancel": "Cancel"
+    }
+  },
+  "hallBookingMessages": {
+    "deleteConfirmStr": "are you sure delete this item?",
+    "deleteConfirmTitle": "Delete Confirmation"
+  },
+  "administration": {
+    "addingHall": "Add New Hall",
+    "meetingType": "Add Meeting Type"
+  }
+}

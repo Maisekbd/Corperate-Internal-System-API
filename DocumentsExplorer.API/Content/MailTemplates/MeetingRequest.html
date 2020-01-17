@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            font-family: 'Sakkal Majalla';
+            direction: rtl;
+            font-size: 18px;
+            margin: 0 auto;
+        }
+
+        p {
+            margin: 2px 2px 2px 2px;
+            padding: 3px;
+        }
+
+        .heading {
+            /*color:#78884a;*/ /*color:#71a260;*/
+            margin: 5px 5px 5px 5px;
+            padding: 0px;
+            font-weight: bold;
+        }
+
+        a:visited {
+            color: Blue;
+        }
+
+        a:active {
+            color: Blue;
+        }
+
+        a:hover {
+            color: Red;
+        }
+
+        .footer {
+            background-color: #7ac142;
+            padding: 10px;
+            text-align: center;
+            height: 30px;
+            margin-right: -15px;
+            margin-left: -15px;
+            margin-top: 15px;
+            color: #fff;
+        }
+
+        .content {
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        @media screen and (max-width: 767px) {
+            .content {
+                width: 100%;
+            }
+        }
+
+
+        .img-responsive {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .logos {
+            background-color: #fff;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            height: 80px;
+            margin-bottom: 30px;
+        }
+
+        .tbl-row-bg {
+            font-family: 'Sakkal Majalla';
+            font-size: 17px;
+            background-color: #edebeb;
+            color: #000;
+            height: 30px;
+        }
+
+        .tbl-row-bg-alt {
+            font-family: 'Sakkal Majalla';
+            font-size: 17px;
+            background-color: #f9fafb;
+            color: #000;
+            height: 30px;
+        }
+
+        .tbl-content {
+            border-top: 3px solid #7ac142;
+        }
+
+        .content-text {
+            font-family: 'Sakkal Majalla';
+            font-size: 17px;
+        }
+    </style>
+
+
+
+</head>
+<body>
+    <div class="content">
+        <table cellpadding="0" cellspacing="0" class="tbl-content" style="width: 100%;">
+            <tr class="logos">
+                <td style="text-align: center;"><img src="http://localhost/DocumentsExplorer.API/Content/images/ar.png" class="img-responsive" width="300" /></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <table cellpadding="4" cellspacing="4" style="width: 100%; text-align: right; font-family: Tahoma;
+            font-size: 12px; color: #111111; ">
+                        <tr style="background-color: #fafafa">
+                            <td colspan="2">
+                                ندعوكم لحضور الإجتماع {meetingNo} بتاريخ {meetingDate} الساعه {meetingTime}
+                            </td>
+                        </tr>
+                        <tr style="background-color: #efefef">
+                            <td style="width: 25%; font-weight: bold">
+                                للإطلاع على أجندة الإجتماع الرجاء الدخول الى الرابط التالي
+                            </td>
+                            <td>
+                                <a href="{DecisionLink}">أجندة الإجتماع</a>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <br />
+                </td>
+            </tr>
+        </table>
+        <table cellpadding="4" cellspacing="2" style="width: 100%; text-align: right; font-family: Tahoma;
+            font-size: 12px; color: #111111; ">
+            <tr class="footer">
+                <td colspan="2">
+                    <p class="content-text"><b>* ملاحظة : </b>تم انشاء هذه الرسالة بشكل تلقائي من نظام متابعه القرارت</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
